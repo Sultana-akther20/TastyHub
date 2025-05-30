@@ -88,11 +88,13 @@ SITE_ID = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
+# Updated django-allauth settings
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-Account_SIGNUP_PASSWORD_ENTER_TWICE = True
-Account_USERNAME_MIN_LENGTH = 4
+ACCOUNT_USERNAME_MIN_LENGTH = 4             # Fixed capitalization
+
+
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
