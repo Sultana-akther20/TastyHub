@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    # Optional -- requires install using `django-allauth[socialaccount]`.
     'allauth.socialaccount',
+    'hub',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +61,10 @@ ROOT_URLCONF = 'feast.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),  # Directory for custom templates
+            os.path.join(BASE_DIR, 'templates', 'allauth'),  # Directory for hub app templates
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
