@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-d1k97$v9&y$%z9+$#zd*4$12n(&o7o1qr=ci*crw^uv(ob2c8!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['feast.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
