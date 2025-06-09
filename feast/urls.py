@@ -20,8 +20,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', include('hub.urls')),
+    path('', include('hub.urls')),  # Hub handles homepage
+    path('products/', include('products.urls')),  # Products at /products/
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,415 @@
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "All Food Items",
+      "description": "Complete collection of our menu items",
+      "parent": null,
+      "is_active": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Dessert",
+      "description": "Sweet treats to end your meal perfectly",
+      "parent": null,
+      "is_active": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Main Dish",
+      "description": "Hearty and satisfying main courses",
+      "parent": null,
+      "is_active": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+      "name": "Special Offers",
+      "description": "Featured deals and promotional items",
+      "parent": null,
+      "is_active": true,
+      "order": 4
+    }
+  },
+ { 
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "name": "Cakes",
+      "description": "Delicious dessert cakes",
+      "parent": 2,
+      "is_active": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+      "name": "Frozen Desserts",
+      "description": "Ice creams and frozen treats",
+      "parent": 2,
+      "is_active": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 7,
+    "fields": {
+      "name": "Fried Desserts",
+      "description": "Crispy fried sweet treats",
+      "parent": 2,
+      "is_active": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 8,
+    "fields": {
+      "name": "Lamb",
+      "description": "Premium lamb dishes",
+      "parent": 3,
+      "is_active": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 9,
+    "fields": {
+      "name": "Chicken",
+      "description": "Delicious chicken preparations",
+      "parent": 3,
+      "is_active": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 10,
+    "fields": {
+      "name": "Vegetarian",
+      "description": "Fresh vegetarian options",
+      "parent": 3,
+      "is_active": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 11,
+    "fields": {
+      "name": "Platters for 2 people",
+      "description": "Perfect portions for two people",
+      "parent": 4,
+      "is_active": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 12,
+    "fields": {
+      "name": "Platters for 4 people",
+      "description": "Ideal for small groups",
+      "parent": 4,
+      "is_active": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 13,
+    "fields": {
+      "name": "Platters for 6 people",
+      "description": "Perfect for family gatherings",
+      "parent": 4,
+      "is_active": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Grilled Lamb Chops",
+      "description": "Premium lamb chops grilled to perfection with rosemary and herbs",
+      "category": 8,
+      "price": "28.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 25,
+      "ingredients": "Lamb chops, rosemary, garlic, olive oil, herbs",
+      "calories": 420
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "Lamb Kebab",
+      "description": "Aromatic basmati rice with tender lamb and traditional spices",
+      "category": 8,
+      "price": "14.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 35,
+      "ingredients": "Lamb, saffron, spices, onions, yogurt",
+      "calories": 680
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "Chicken Wings",
+      "description": "Spicy chicken wings tossed, served with celery and ranch",
+      "category": 9,
+      "price": "12.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 15,
+      "ingredients": "Chicken wings, celery, ranch dressing",
+      "calories": 450
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "Grilled Chicken Roast",
+      "description": "Tender grilled chicken Roast with herbs and spices",
+      "category": 9,
+      "price": "18.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 20,
+      "ingredients": "Whole chicken, herbs, spices, olive oil",
+      "calories": 350
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "Chicken Curry",
+      "description": "Creamy grilled chicken and parmesan cheese",
+      "category": 9,
+      "price": "17.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 15,
+      "ingredients": "Chicken breast, alfredo sauce, parmesan cheese",
+      "calories": 720
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "name": "Chicken kebab",
+      "description": "Tender chicken kebab in creamy tomato-based curry sauce",
+      "category": 9,
+      "price": "19.99",
+      "is_available": true,
+      "is_featured": false,
+      "preparation_time": 25,
+      "ingredients": "Chicken, tomatoes, cream, spices",
+      "calories": 520
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+      "name": "Vegetable Curry",
+      "description": "Mixed vegetables in aromatic curry sauce with basmati rice",
+      "category": 10,
+      "price": "15.99",
+      "is_available": true,
+      "is_featured": false,
+      "preparation_time": 20,
+      "ingredients": "Mixed vegetables, curry spices, coconut milk, basmati rice",
+      "calories": 380
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "name": "Caprese Salad",
+      "description": "Fresh mozzarella, tomatoes, and basil with balsamic glaze",
+      "category": 10,
+      "price": "12.99",
+      "is_available": true,
+      "is_featured": false,
+      "preparation_time": 8,
+      "ingredients": "Fresh mozzarella, tomatoes, basil, balsamic glaze",
+      "calories": 250
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+      "name": "Grilled vegetables",
+      "description": "Crisp aubergines with tomatoes, and caesar dressing",
+      "category": 10,
+      "price": "9.99",
+      "is_available": true,
+      "is_featured": false,
+      "preparation_time": 5,
+      "ingredients": "Aubergines, tomatoes, caesar dressing",
+      "calories": 280
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "name": "Chocolate Cake",
+      "description": "Warm chocolate cake with molten chocolate center, served with vanilla ice cream",
+      "category": 5,
+      "price": "7.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 8,
+      "ingredients": "Chocolate, flour, eggs, butter, vanilla ice cream",
+      "calories": 480
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "name": "Vanilla Cone Ice Cream",
+      "description": "Classic vanilla Ice Cream with cone and mascarpone",
+      "category": 6,
+      "price": "6.99",
+      "is_available": true,
+      "is_featured": false,
+      "preparation_time": 5,
+      "ingredients": "Vanilla ice cream, coating, honey, whipped cream",
+      "calories": 350
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 12,
+    "fields": {
+      "name": "Strawberry Ice Cream",
+      "description": "Premium strawberry ice cream with fresh berries",
+      "category": 6,
+      "price": "5.99",
+      "is_available": true,
+      "is_featured": false,
+      "preparation_time": 3,
+      "ingredients": "Strawberry ice cream, fresh berries",
+      "calories": 220
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 13,
+    "fields": {
+      "name": "Gelato Trio",
+      "description": "Three scoops of artisan gelato - pistachio, chocolate, and strawberry",
+      "category": 6,
+      "price": "7.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 5,
+      "ingredients": "Pistachio gelato, chocolate gelato, strawberry gelato",
+      "calories": 280
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 14,
+    "fields": {
+      "name": "Churros with Chocolate",
+      "description": "Crispy fried churros dusted with cinnamon sugar, served with chocolate sauce",
+      "category": 7,
+      "price": "5.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 12,
+      "ingredients": "Flour, cinnamon, sugar, chocolate sauce",
+      "calories": 320
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 15,
+    "fields": {
+      "name": "Fried vanilla donut",
+      "description": "Vanilla flavoured, crispy fried donut",
+      "category": 7,
+      "price": "4.99",
+      "is_available": true,
+      "is_featured": false,
+      "preparation_time": 10,
+      "ingredients": "Vanilla flavoured, flower, butter and egg",
+      "calories": 450
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 16,
+    "fields": {
+      "name": "Couple Dinner Platter",
+      "description": "Perfect for two - includes grilled chicken, lamb chops, rice, and dessert",
+      "category": 11,
+      "price": "45.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 30,
+      "ingredients": "Grilled chicken, lamb chops, basmati rice, vegetables, chocolate cake",
+      "calories": 1200
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 17,
+    "fields": {
+      "name": "Family of 4 Feast Platter",
+      "description": "Great for families of 4 - mixed grill with chicken, lamb, rice, and sides",
+      "category": 12,
+      "price": "89.99",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 40,
+      "ingredients": "Mixed grill meats, rice, naan bread, vegetables, salad, desserts",
+      "calories": 2400
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 18,
+    "fields": {
+      "name": "Family of 6 Feast Platter",
+      "description": "Perfect for 6 people - includes variety of main dishes, sides, and desserts",
+      "category": 13,
+      "price": "100",
+      "is_available": true,
+      "is_featured": true,
+      "preparation_time": 50,
+      "ingredients": "Assorted meats, rice dishes, breads, salads, vegetables, dessert selection",
+      "calories": 3600
+    }
+  }
+]

@@ -29,10 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-d1k97$v9&y$%z9+$#zd*4$12n(&o7o1qr=ci*crw^uv(ob2c8!'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['feast-96a8a609907d.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['feast-96a8a609907d.herokuapp.com', 'localhost', '127.0.0.1', '.herokuapp.com']
 
 
 # Application definition
