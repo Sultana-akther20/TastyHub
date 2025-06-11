@@ -109,6 +109,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4             # Fixed capitalization
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'feast.wsgi.application'
 
