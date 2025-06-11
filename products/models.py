@@ -3,7 +3,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from django.utils.text import slugify
 
-
 class Category(models.Model):
     """
     Category model for organizing products hierarchically
@@ -55,7 +54,6 @@ class Category(models.Model):
             children.extend(child.get_all_children)
         return children
 
-
 class Product(models.Model):
     """
     Product model for menu items
@@ -74,8 +72,8 @@ class Product(models.Model):
     )
     
     # Availability and featured status
-    is_available = models.BooleanField(default=True)
-    is_featured = models.BooleanField(default=False)
+    is_available = models.BooleanField(default=True, help_text="Is this item currently available?")
+    is_featured = models.BooleanField(default=False, help_text="Display as featured item")
     
     # Additional product details
     preparation_time = models.PositiveIntegerField(
@@ -83,43 +81,27 @@ class Product(models.Model):
         validators=[MinValueValidator(1)]
     )
     ingredients = models.TextField(
-        help_text="List of ingredients used in this product"
-    )
-    calories = models.PositiveIntegerField(
-        null=True, 
-        blank=True,
-        help_text="Calories per serving"
+        help_text="List of ingredients used in this dish"
     )
     
     # SEO and URL
     slug = models.SlugField(max_length=220, unique=True, blank=True, null=True)
     
-    # Image field - assuming images are in media folder of another app
-    # Adjust the upload_to path based on your media structure
+    # Image field
     image = models.ImageField(
         upload_to='products/images/', 
         null=True, 
         blank=True,
-        help_text="Product image"
+        help_text="Dish image"
     )
     
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     
-    # Stock management (optional)
-    stock_quantity = models.PositiveIntegerField(
-        default=0,
-        help_text="Available stock quantity"
-    )
-    track_stock = models.BooleanField(
-        default=False,
-        help_text="Whether to track stock for this product"
-    )
-    
     class Meta:
-        verbose_name = "Product"
-        verbose_name_plural = "Products"
+        verbose_name = "Menu Item"
+        verbose_name_plural = "Menu Items"
         ordering = ['-is_featured', 'category__order', 'name']
         indexes = [
             models.Index(fields=['is_available', 'is_featured']),
@@ -138,13 +120,6 @@ class Product(models.Model):
         return reverse('products:product_detail', kwargs={'slug': self.slug})
     
     @property
-    def is_in_stock(self):
-        """Check if product is in stock (if stock tracking is enabled)"""
-        if not self.track_stock:
-            return self.is_available
-        return self.is_available and self.stock_quantity > 0
-    
-    @property
     def formatted_price(self):
         """Return formatted price with currency symbol"""
         return f"${self.price}"
@@ -155,7 +130,6 @@ class Product(models.Model):
         if self.preparation_time == 1:
             return "1 minute"
         return f"{self.preparation_time} minutes"
-
 
 class ProductImage(models.Model):
     """
@@ -168,7 +142,7 @@ class ProductImage(models.Model):
     )
     image = models.ImageField(
         upload_to='products/gallery/',
-        help_text="Additional product image"
+        help_text="Additional dish image"
     )
     alt_text = models.CharField(
         max_length=200,
@@ -187,10 +161,9 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"{self.product.name} - Image {self.order}"
 
-
 class ProductReview(models.Model):
     """
-    Model for customer reviews (optional)
+    Model for customer reviews
     """
     RATING_CHOICES = [
         (1, '1 Star'),
@@ -219,48 +192,14 @@ class ProductReview(models.Model):
     
     class Meta:
         ordering = ['-created_at']
-        verbose_name = "Product Review"
-        verbose_name_plural = "Product Reviews"
+        verbose_name = "Customer Review"
+        verbose_name_plural = "Customer Reviews"
         unique_together = ['product', 'customer_email']  # One review per email per product
     
     def __str__(self):
         return f"{self.product.name} - {self.rating} stars by {self.customer_name}"
-
-
-# Optional: Nutritional Information Model
-class NutritionalInfo(models.Model):
-    """
-    Detailed nutritional information for products
-    """
-    product = models.OneToOneField(
-        Product,
-        on_delete=models.CASCADE,
-        related_name='nutrition'
-    )
     
-    # Nutritional values per serving
-    calories = models.PositiveIntegerField(null=True, blank=True)
-    protein = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, help_text="Grams")
-    carbohydrates = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, help_text="Grams")
-    fat = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, help_text="Grams")
-    fiber = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, help_text="Grams")
-    sugar = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, help_text="Grams")
-    sodium = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, help_text="Milligrams")
-    
-    # Allergen information
-    contains_gluten = models.BooleanField(default=False)
-    contains_dairy = models.BooleanField(default=False)
-    contains_nuts = models.BooleanField(default=False)
-    contains_eggs = models.BooleanField(default=False)
-    contains_soy = models.BooleanField(default=False)
-    
-    vegetarian = models.BooleanField(default=False)
-    vegan = models.BooleanField(default=False)
-    gluten_free = models.BooleanField(default=False)
-    
-    class Meta:
-        verbose_name = "Nutritional Information"
-        verbose_name_plural = "Nutritional Information"
-    
-    def __str__(self):
-        return f"Nutrition info for {self.product.name}"
+    @property
+    def star_display(self):
+        """Return star rating as symbols"""
+        return '★' * self.rating + '☆' * (5 - self.rating)

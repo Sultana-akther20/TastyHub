@@ -153,8 +153,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 25,
-      "ingredients": "Lamb chops, rosemary, garlic, olive oil, herbs",
-      "calories": 420
+      "ingredients": "Lamb chops, rosemary, garlic, olive oil, herbs"
     }
   },
   {
@@ -168,8 +167,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 35,
-      "ingredients": "Lamb, saffron, spices, onions, yogurt",
-      "calories": 680
+      "ingredients": "Lamb, saffron, spices, onions, yogurt"
     }
   },
   {
@@ -183,8 +181,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 15,
-      "ingredients": "Chicken wings, celery, ranch dressing",
-      "calories": 450
+      "ingredients": "Chicken wings, celery, ranch dressing"
     }
   },
   {
@@ -198,8 +195,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 20,
-      "ingredients": "Whole chicken, herbs, spices, olive oil",
-      "calories": 350
+      "ingredients": "Whole chicken, herbs, spices, olive oil"
     }
   },
   {
@@ -213,8 +209,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 15,
-      "ingredients": "Chicken breast, alfredo sauce, parmesan cheese",
-      "calories": 720
+      "ingredients": "Chicken breast, alfredo sauce, parmesan cheese"
     }
   },
   {
@@ -228,8 +223,7 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 25,
-      "ingredients": "Chicken, tomatoes, cream, spices",
-      "calories": 520
+      "ingredients": "Chicken, tomatoes, cream, spices"
     }
   },
   {
@@ -243,8 +237,7 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 20,
-      "ingredients": "Mixed vegetables, curry spices, coconut milk, basmati rice",
-      "calories": 380
+      "ingredients": "Mixed vegetables, curry spices, coconut milk, basmati rice"
     }
   },
   {
@@ -258,8 +251,7 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 8,
-      "ingredients": "Fresh mozzarella, tomatoes, basil, balsamic glaze",
-      "calories": 250
+      "ingredients": "Fresh mozzarella, tomatoes, basil, balsamic glaze"
     }
   },
   {
@@ -273,8 +265,7 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 5,
-      "ingredients": "Aubergines, tomatoes, caesar dressing",
-      "calories": 280
+      "ingredients": "Aubergines, tomatoes, caesar dressing"
     }
   },
   {
@@ -288,8 +279,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 8,
-      "ingredients": "Chocolate, flour, eggs, butter, vanilla ice cream",
-      "calories": 480
+      "ingredients": "Chocolate, flour, eggs, butter, vanilla ice cream"
     }
   },
   {
@@ -303,8 +293,7 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 5,
-      "ingredients": "Vanilla ice cream, coating, honey, whipped cream",
-      "calories": 350
+      "ingredients": "Vanilla ice cream, coating, honey, whipped cream"
     }
   },
   {
@@ -318,8 +307,7 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 3,
-      "ingredients": "Strawberry ice cream, fresh berries",
-      "calories": 220
+      "ingredients": "Strawberry ice cream, fresh berries"
     }
   },
   {
@@ -333,8 +321,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 5,
-      "ingredients": "Pistachio gelato, chocolate gelato, strawberry gelato",
-      "calories": 280
+      "ingredients": "Pistachio gelato, chocolate gelato, strawberry gelato"
     }
   },
   {
@@ -348,8 +335,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 12,
-      "ingredients": "Flour, cinnamon, sugar, chocolate sauce",
-      "calories": 320
+      "ingredients": "Flour, cinnamon, sugar, chocolate sauce"
     }
   },
   {
@@ -363,8 +349,7 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 10,
-      "ingredients": "Vanilla flavoured, flower, butter and egg",
-      "calories": 450
+      "ingredients": "Vanilla flavoured, flower, butter and egg"
     }
   },
   {
@@ -378,8 +363,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 30,
-      "ingredients": "Grilled chicken, lamb chops, basmati rice, vegetables, chocolate cake",
-      "calories": 1200
+      "ingredients": "Grilled chicken, lamb chops, basmati rice, vegetables, chocolate cake"
     }
   },
   {
@@ -393,8 +377,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 40,
-      "ingredients": "Mixed grill meats, rice, naan bread, vegetables, salad, desserts",
-      "calories": 2400
+      "ingredients": "Mixed grill meats, rice, naan bread, vegetables, salad, desserts"
     }
   },
   {
@@ -408,8 +391,7 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 50,
-      "ingredients": "Assorted meats, rice dishes, breads, salads, vegetables, dessert selection",
-      "calories": 3600
+      "ingredients": "Assorted meats, rice dishes, breads, salads, vegetables, dessert selection"
     }
   }
 ]

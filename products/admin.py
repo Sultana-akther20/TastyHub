@@ -1,14 +1,9 @@
-
-
 # Register your models here.
-
-
 from django.contrib import admin
 from django.utils.html import format_html
 from django.db import models
 from django.forms import TextInput, Textarea
-from .models import Category, Product, ProductImage, ProductReview, NutritionalInfo
-
+from .models import Category, Product, ProductImage, ProductReview
 
 class ProductImageInline(admin.TabularInline):
     """Inline admin for product images"""
@@ -18,25 +13,6 @@ class ProductImageInline(admin.TabularInline):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '40'})},
     }
-
-
-class NutritionalInfoInline(admin.StackedInline):
-    """Inline admin for nutritional information"""
-    model = NutritionalInfo
-    extra = 0
-    fieldsets = (
-        ('Basic Nutrition', {
-            'fields': ('calories', 'protein', 'carbohydrates', 'fat', 'fiber', 'sugar', 'sodium')
-        }),
-        ('Allergens & Dietary', {
-            'fields': (
-                ('contains_gluten', 'contains_dairy', 'contains_nuts'),
-                ('contains_eggs', 'contains_soy'),
-                ('vegetarian', 'vegan', 'gluten_free')
-            )
-        }),
-    )
-
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -64,7 +40,7 @@ class CategoryAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
     
     def product_count(self, obj):
-        """Display number of products in this category"""
+        """Display number of menu items in this category"""
         count = obj.products.count()
         if count > 0:
             return format_html(
@@ -72,22 +48,21 @@ class CategoryAdmin(admin.ModelAdmin):
                 count
             )
         return count
-    product_count.short_description = 'Products'
+    product_count.short_description = 'Menu Items'
     
     def get_queryset(self, request):
         """Optimize queries"""
         return super().get_queryset(request).select_related('parent').prefetch_related('products')
-
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     """Admin configuration for Product model"""
     list_display = (
         'name', 'category', 'formatted_price', 'is_available', 
-        'is_featured', 'preparation_time_display', 'stock_status', 'created_at', 'price'
+        'is_featured', 'preparation_time_display', 'created_at', 'price'
     )
     list_filter = (
-        'is_available', 'is_featured', 'category', 'track_stock', 
+        'is_available', 'is_featured', 'category', 
         'created_at', 'category__parent'
     )
     search_fields = ('name', 'description', 'ingredients')
@@ -100,13 +75,10 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('name', 'slug', 'description', 'category')
         }),
         ('Pricing & Availability', {
-            'fields': (
-                ('price', 'is_available', 'is_featured'),
-                ('track_stock', 'stock_quantity')
-            )
+            'fields': ('price', 'is_available', 'is_featured')
         }),
-        ('Product Details', {
-            'fields': ('preparation_time', 'ingredients', 'calories')
+        ('Dish Details', {
+            'fields': ('preparation_time', 'ingredients')
         }),
         ('Media', {
             'fields': ('image',)
@@ -118,25 +90,12 @@ class ProductAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ('created_at', 'updated_at')
-    inlines = [ProductImageInline, NutritionalInfoInline]
+    inlines = [ProductImageInline]
     
     # Custom form field widgets
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 80})},
     }
-    
-    def stock_status(self, obj):
-        """Display stock status with color coding"""
-        if not obj.track_stock:
-            return format_html('<span style="color: gray;">Not tracked</span>')
-        
-        if obj.stock_quantity == 0:
-            return format_html('<span style="color: red; font-weight: bold;">Out of Stock</span>')
-        elif obj.stock_quantity <= 5:
-            return format_html('<span style="color: orange; font-weight: bold;">Low Stock ({})</span>', obj.stock_quantity)
-        else:
-            return format_html('<span style="color: green;">In Stock ({})</span>', obj.stock_quantity)
-    stock_status.short_description = 'Stock Status'
     
     def formatted_price(self, obj):
         """Display formatted price"""
@@ -157,29 +116,28 @@ class ProductAdmin(admin.ModelAdmin):
     actions = ['mark_as_featured', 'mark_as_not_featured', 'mark_as_available', 'mark_as_unavailable']
     
     def mark_as_featured(self, request, queryset):
-        """Mark selected products as featured"""
+        """Mark selected items as featured"""
         updated = queryset.update(is_featured=True)
-        self.message_user(request, f'{updated} products marked as featured.')
-    mark_as_featured.short_description = 'Mark selected products as featured'
+        self.message_user(request, f'{updated} menu items marked as featured.')
+    mark_as_featured.short_description = 'Mark selected items as featured'
     
     def mark_as_not_featured(self, request, queryset):
-        """Mark selected products as not featured"""
+        """Mark selected items as not featured"""
         updated = queryset.update(is_featured=False)
-        self.message_user(request, f'{updated} products marked as not featured.')
-    mark_as_not_featured.short_description = 'Mark selected products as not featured'
+        self.message_user(request, f'{updated} menu items marked as not featured.')
+    mark_as_not_featured.short_description = 'Mark selected items as not featured'
     
     def mark_as_available(self, request, queryset):
-        """Mark selected products as available"""
+        """Mark selected items as available"""
         updated = queryset.update(is_available=True)
-        self.message_user(request, f'{updated} products marked as available.')
-    mark_as_available.short_description = 'Mark selected products as available'
+        self.message_user(request, f'{updated} menu items marked as available.')
+    mark_as_available.short_description = 'Mark selected items as available'
     
     def mark_as_unavailable(self, request, queryset):
-        """Mark selected products as unavailable"""
+        """Mark selected items as unavailable"""
         updated = queryset.update(is_available=False)
-        self.message_user(request, f'{updated} products marked as unavailable.')
-    mark_as_unavailable.short_description = 'Mark selected products as unavailable'
-
+        self.message_user(request, f'{updated} menu items marked as unavailable.')
+    mark_as_unavailable.short_description = 'Mark selected items as unavailable'
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
@@ -193,11 +151,10 @@ class ProductImageAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('product')
 
-
 @admin.register(ProductReview)
 class ProductReviewAdmin(admin.ModelAdmin):
     """Admin configuration for ProductReview model"""
-    list_display = ('product', 'customer_name', 'rating', 'is_approved', 'created_at')
+    list_display = ('product', 'customer_name', 'star_rating', 'is_approved', 'created_at')
     list_filter = ('rating', 'is_approved', 'created_at', 'product__category')
     search_fields = ('product__name', 'customer_name', 'customer_email', 'comment')
     list_editable = ('is_approved',)
@@ -218,6 +175,15 @@ class ProductReviewAdmin(admin.ModelAdmin):
     
     readonly_fields = ('created_at', 'updated_at')
     
+    def star_rating(self, obj):
+        """Display star rating"""
+        return format_html(
+            '<span style="color: #ffc107; font-size: 16px;">{}</span>',
+            obj.star_display
+        )
+    star_rating.short_description = 'Rating'
+    star_rating.admin_order_field = 'rating'
+    
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('product')
     
@@ -234,39 +200,6 @@ class ProductReviewAdmin(admin.ModelAdmin):
         updated = queryset.update(is_approved=False)
         self.message_user(request, f'{updated} reviews disapproved.')
     disapprove_reviews.short_description = 'Disapprove selected reviews'
-
-
-@admin.register(NutritionalInfo)
-class NutritionalInfoAdmin(admin.ModelAdmin):
-    """Admin configuration for NutritionalInfo model"""
-    list_display = ('product', 'calories', 'protein', 'carbohydrates', 'fat', 'vegetarian', 'vegan')
-    list_filter = ('vegetarian', 'vegan', 'gluten_free', 'contains_gluten', 'contains_dairy')
-    search_fields = ('product__name',)
-    
-    fieldsets = (
-        ('Product', {
-            'fields': ('product',)
-        }),
-        ('Nutritional Values (per serving)', {
-            'fields': (
-                ('calories', 'protein', 'carbohydrates'),
-                ('fat', 'fiber', 'sugar', 'sodium')
-            )
-        }),
-        ('Allergen Information', {
-            'fields': (
-                ('contains_gluten', 'contains_dairy', 'contains_nuts'),
-                ('contains_eggs', 'contains_soy')
-            )
-        }),
-        ('Dietary Classifications', {
-            'fields': ('vegetarian', 'vegan', 'gluten_free')
-        }),
-    )
-    
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('product')
-
 
 # Customize admin site header and title
 admin.site.site_header = "TastyHub Restaurant Admin"
