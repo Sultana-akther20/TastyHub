@@ -17,8 +17,8 @@ class ProductImageInline(admin.TabularInline):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     """Admin configuration for Category model"""
-    list_display = ('name', 'parent', 'is_active', 'order', 'product_count', 'created_at')
-    list_filter = ('is_active', 'parent', 'created_at')
+    list_display = ('name', 'parent', 'is_active', 'order', 'product_count')
+    list_filter = ('is_active', 'parent')
     search_fields = ('name', 'description')
     list_editable = ('is_active', 'order')
     prepopulated_fields = {'slug': ('name',)}
@@ -31,20 +31,14 @@ class CategoryAdmin(admin.ModelAdmin):
         ('Display Options', {
             'fields': ('is_active', 'order')
         }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
     )
-    
-    readonly_fields = ('created_at', 'updated_at')
     
     def product_count(self, obj):
         """Display number of menu items in this category"""
         count = obj.products.count()
         if count > 0:
             return format_html(
-                '<span style="color: green; font-weight: bold;">{}</span>',
+                '<strong>{}</strong>',
                 count
             )
         return count
@@ -59,11 +53,10 @@ class ProductAdmin(admin.ModelAdmin):
     """Admin configuration for Product model"""
     list_display = (
         'name', 'category', 'formatted_price', 'is_available', 
-        'is_featured', 'preparation_time_display', 'created_at', 'price'
+        'is_featured', 'preparation_time_display', 'price'
     )
     list_filter = (
-        'is_available', 'is_featured', 'category', 
-        'created_at', 'category__parent'
+        'is_available', 'is_featured', 'category', 'category__parent'
     )
     search_fields = ('name', 'description', 'ingredients')
     list_editable = ('is_available', 'is_featured', 'price')
@@ -83,13 +76,7 @@ class ProductAdmin(admin.ModelAdmin):
         ('Media', {
             'fields': ('image',)
         }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
     )
-    
-    readonly_fields = ('created_at', 'updated_at')
     inlines = [ProductImageInline]
     
     # Custom form field widgets
@@ -142,6 +129,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
     """Admin configuration for ProductImage model"""
+    # Fixed: removed 'created_at' from list_display since Product model no longer has timestamps
     list_display = ('product', 'alt_text', 'order', 'created_at')
     list_filter = ('created_at', 'product__category')
     search_fields = ('product__name', 'alt_text')
@@ -178,7 +166,7 @@ class ProductReviewAdmin(admin.ModelAdmin):
     def star_rating(self, obj):
         """Display star rating"""
         return format_html(
-            '<span style="color: #ffc107; font-size: 16px;">{}</span>',
+            '<span style="color: #ffc107;">{}</span>',
             obj.star_display
         )
     star_rating.short_description = 'Rating'
@@ -205,3 +193,5 @@ class ProductReviewAdmin(admin.ModelAdmin):
 admin.site.site_header = "TastyHub Restaurant Admin"
 admin.site.site_title = "TastyHub Admin"
 admin.site.index_title = "Restaurant Management Dashboard"
+
+# Removed duplicate registrations - models are already registered using decorators above

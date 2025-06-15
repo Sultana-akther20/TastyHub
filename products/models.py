@@ -20,9 +20,6 @@ class Category(models.Model):
     order = models.PositiveIntegerField(default=0, help_text="Display order")
     slug = models.SlugField(max_length=120, unique=True, blank=True, null=True)
     
-    # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     
     class Meta:
         verbose_name = "Category"
@@ -95,9 +92,6 @@ class Product(models.Model):
         help_text="Dish image"
     )
     
-    # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     
     class Meta:
         verbose_name = "Menu Item"
