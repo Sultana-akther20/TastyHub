@@ -91,7 +91,7 @@ class Product(models.Model):
         blank=True,
         help_text="Dish image"
     )
-    
+    #image_url = models.URLField(max_length=1000, null=True, blank=True)
     
     class Meta:
         verbose_name = "Menu Item"
