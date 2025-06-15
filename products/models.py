@@ -86,7 +86,7 @@ class Product(models.Model):
     
     # Image field
     image = models.ImageField(
-        upload_to='products/images/', 
+        upload_to='', 
         null=True, 
         blank=True,
         help_text="Dish image"

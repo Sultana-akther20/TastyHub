@@ -1,4 +1,3 @@
-# Register your models here.
 from django.contrib import admin
 from django.utils.html import format_html
 from django.db import models
@@ -9,10 +8,21 @@ class ProductImageInline(admin.TabularInline):
     """Inline admin for product images"""
     model = ProductImage
     extra = 1
-    fields = ('image', 'alt_text', 'order')
+    fields = ('image', 'image_preview', 'alt_text', 'order')
+    readonly_fields = ('image_preview',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '40'})},
     }
+    
+    def image_preview(self, obj):
+        """Show image preview in admin"""
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 50px; max-width: 100px;" />',
+                obj.image.url
+            )
+        return "No image"
+    image_preview.short_description = 'Preview'
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -53,15 +63,15 @@ class ProductAdmin(admin.ModelAdmin):
     """Admin configuration for Product model"""
     list_display = (
         'name', 'category', 'formatted_price', 'is_available', 
-        'is_featured', 'preparation_time_display', 'price'
+        'is_featured', 'preparation_time_display', 'image_preview'
     )
     list_filter = (
-        'is_available', 'is_featured', 'category', 'category__parent'
+        'is_available', 'is_featured', 'category'
     )
     search_fields = ('name', 'description', 'ingredients')
-    list_editable = ('is_available', 'is_featured', 'price')
+    list_editable = ('is_available', 'is_featured')
     prepopulated_fields = {'slug': ('name',)}
-    ordering = ('-is_featured', 'category__order', 'name')
+    ordering = ('-is_featured', 'name')
     
     fieldsets = (
         ('Basic Information', {
@@ -74,15 +84,27 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('preparation_time', 'ingredients')
         }),
         ('Media', {
-            'fields': ('image',)
+            'fields': ('image', 'image_preview')
         }),
     )
+    
+    readonly_fields = ('image_preview',)
     inlines = [ProductImageInline]
     
     # Custom form field widgets
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 80})},
     }
+    
+    def image_preview(self, obj):
+        """Show image preview in admin"""
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 100px; max-width: 150px;" />',
+                obj.image.url
+            )
+        return "No image"
+    image_preview.short_description = 'Image Preview'
     
     def formatted_price(self, obj):
         """Display formatted price"""
@@ -129,12 +151,22 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
     """Admin configuration for ProductImage model"""
-    # Fixed: removed 'created_at' from list_display since Product model no longer has timestamps
-    list_display = ('product', 'alt_text', 'order', 'created_at')
-    list_filter = ('created_at', 'product__category')
+    list_display = ('product', 'image_preview', 'alt_text', 'order', 'created_at')
+    list_filter = ('created_at',)
     search_fields = ('product__name', 'alt_text')
     list_editable = ('order',)
     ordering = ('product', 'order')
+    readonly_fields = ('image_preview',)
+    
+    def image_preview(self, obj):
+        """Show image preview in admin"""
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 50px; max-width: 100px;" />',
+                obj.image.url
+            )
+        return "No image"
+    image_preview.short_description = 'Preview'
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('product')
@@ -143,7 +175,7 @@ class ProductImageAdmin(admin.ModelAdmin):
 class ProductReviewAdmin(admin.ModelAdmin):
     """Admin configuration for ProductReview model"""
     list_display = ('product', 'customer_name', 'star_rating', 'is_approved', 'created_at')
-    list_filter = ('rating', 'is_approved', 'created_at', 'product__category')
+    list_filter = ('rating', 'is_approved', 'created_at')
     search_fields = ('product__name', 'customer_name', 'customer_email', 'comment')
     list_editable = ('is_approved',)
     ordering = ('-created_at',)
@@ -186,12 +218,10 @@ class ProductReviewAdmin(admin.ModelAdmin):
     def disapprove_reviews(self, request, queryset):
         """Disapprove selected reviews"""
         updated = queryset.update(is_approved=False)
-        self.message_user(request, f'{updated} reviews disapproved.')
+        self.message_user(request, f'{updated} reviews disapprove.')
     disapprove_reviews.short_description = 'Disapprove selected reviews'
 
 # Customize admin site header and title
 admin.site.site_header = "TastyHub Restaurant Admin"
 admin.site.site_title = "TastyHub Admin"
 admin.site.index_title = "Restaurant Management Dashboard"
-
-# Removed duplicate registrations - models are already registered using decorators above

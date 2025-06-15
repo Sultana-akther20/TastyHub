@@ -26,4 +26,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('hub.urls')),  # Hub handles homepage
     path('products/', include('products.urls')),  # Products at /products/
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
