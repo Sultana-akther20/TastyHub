@@ -153,7 +153,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 25,
-      "ingredients": "Lamb chops, rosemary, garlic, olive oil, herbs"
+      "ingredients": "Lamb chops, rosemary, garlic, olive oil, herbs",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -167,7 +169,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 35,
-      "ingredients": "Lamb, saffron, spices, onions, yogurt"
+      "ingredients": "Lamb, saffron, spices, onions, yogurt",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -181,7 +185,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 15,
-      "ingredients": "Chicken wings, celery, ranch dressing"
+      "ingredients": "Chicken wings, celery, ranch dressing",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -195,7 +201,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 20,
-      "ingredients": "Whole chicken, herbs, spices, olive oil"
+      "ingredients": "Whole chicken, herbs, spices, olive oil",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -209,7 +217,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 15,
-      "ingredients": "Chicken breast, alfredo sauce, parmesan cheese"
+      "ingredients": "Chicken breast, alfredo sauce, parmesan cheese",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -223,7 +233,9 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 25,
-      "ingredients": "Chicken, tomatoes, cream, spices"
+      "ingredients": "Chicken, tomatoes, cream, spices",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -237,7 +249,9 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 20,
-      "ingredients": "Mixed vegetables, curry spices, coconut milk, basmati rice"
+      "ingredients": "Mixed vegetables, curry spices, coconut milk, basmati rice",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -251,7 +265,9 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 8,
-      "ingredients": "Fresh mozzarella, tomatoes, basil, balsamic glaze"
+      "ingredients": "Fresh mozzarella, tomatoes, basil, balsamic glaze",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -265,7 +281,9 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 5,
-      "ingredients": "Aubergines, tomatoes, caesar dressing"
+      "ingredients": "Aubergines, tomatoes, caesar dressing",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -279,7 +297,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 8,
-      "ingredients": "Chocolate, flour, eggs, butter, vanilla ice cream"
+      "ingredients": "Chocolate, flour, eggs, butter, vanilla ice cream",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -293,7 +313,9 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 5,
-      "ingredients": "Vanilla ice cream, coating, honey, whipped cream"
+      "ingredients": "Vanilla ice cream, coating, honey, whipped cream",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -307,7 +329,9 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 3,
-      "ingredients": "Strawberry ice cream, fresh berries"
+      "ingredients": "Strawberry ice cream, fresh berries",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -321,7 +345,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 5,
-      "ingredients": "Pistachio gelato, chocolate gelato, strawberry gelato"
+      "ingredients": "Pistachio gelato, chocolate gelato, strawberry gelato",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -335,7 +361,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 12,
-      "ingredients": "Flour, cinnamon, sugar, chocolate sauce"
+      "ingredients": "Flour, cinnamon, sugar, chocolate sauce",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -349,7 +377,9 @@
       "is_available": true,
       "is_featured": false,
       "preparation_time": 10,
-      "ingredients": "Vanilla flavoured, flower, butter and egg"
+      "ingredients": "Vanilla flavoured, flower, butter and egg",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -363,7 +393,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 30,
-      "ingredients": "Grilled chicken, lamb chops, basmati rice, vegetables, chocolate cake"
+      "ingredients": "Grilled chicken, lamb chops, basmati rice, vegetables, chocolate cake",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -377,7 +409,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 40,
-      "ingredients": "Mixed grill meats, rice, naan bread, vegetables, salad, desserts"
+      "ingredients": "Mixed grill meats, rice, naan bread, vegetables, salad, desserts",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   },
   {
@@ -391,7 +425,9 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 50,
-      "ingredients": "Assorted meats, rice dishes, breads, salads, vegetables, dessert selection"
+      "ingredients": "Assorted meats, rice dishes, breads, salads, vegetables, dessert selection",
+      "image_url": "https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-wqsUZB9D0Lk", 
+      "image": "lamb-chops-2.jpg"
     }
   }
 ]

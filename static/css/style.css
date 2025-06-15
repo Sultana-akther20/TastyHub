@@ -10,7 +10,7 @@ body {
     color: #555;
     font-family: 'Lato';
 }
-/* from Bulma */
+
 .icon {
     align-items: center;
     display: inline-flex;
@@ -46,6 +46,14 @@ body {
 .btn-black:focus {
     background: #222;
     color: white;
+}
+
+.product{
+position: fixed;
+height: 100%;
+width: 100%;
+background-color: aliceblue;
+z-index: -1;
 }
 
 .text-black {
