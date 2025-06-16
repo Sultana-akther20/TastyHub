@@ -51,6 +51,10 @@ class Category(models.Model):
             children.extend(child.get_all_children)
         return children
 
+
+
+
+
 class Product(models.Model):
     """
     Product model for menu items
@@ -86,7 +90,7 @@ class Product(models.Model):
     
     # Image field
     image = models.ImageField(
-        upload_to='', 
+        upload_to='images/', 
         null=True, 
         blank=True,
         help_text="Dish image"
@@ -102,7 +106,7 @@ class Product(models.Model):
             models.Index(fields=['category', 'is_available']),
         ]
         
-    def __str__(self):
+    def _str_(self):
         return self.name
     
     def save(self, *args, **kwargs):
@@ -123,7 +127,7 @@ class Product(models.Model):
         """Return formatted preparation time"""
         if self.preparation_time == 1:
             return "1 minute"
-        return f"{self.preparation_time} minutes"
+        return f"{self.preparation_time} minutes"
 
 class ProductImage(models.Model):
     """

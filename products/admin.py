@@ -58,6 +58,12 @@ class CategoryAdmin(admin.ModelAdmin):
         """Optimize queries"""
         return super().get_queryset(request).select_related('parent').prefetch_related('products')
 
+
+
+
+
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     """Admin configuration for Product model"""
@@ -146,7 +152,9 @@ class ProductAdmin(admin.ModelAdmin):
         """Mark selected items as unavailable"""
         updated = queryset.update(is_available=False)
         self.message_user(request, f'{updated} menu items marked as unavailable.')
-    mark_as_unavailable.short_description = 'Mark selected items as unavailable'
+    mark_as_unavailable.short_description = 'Mark selected items as unavailable'  
+
+
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):

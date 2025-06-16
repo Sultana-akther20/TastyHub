@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'hub',
     'products',
-    'storages',
 ]
 
 MIDDLEWARE = [
@@ -161,34 +160,15 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.codeinstitute-ide.net/",
     "https://*.herokuapp.com"
 ]
-# AWS S3 Configuration
-if not DEBUG:  # Only use S3 in production
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-    AWS_DEFAULT_ACL = None
-    AWS_S3_OBJECT_PARAMETERS = {
-        'CacheControl': 'max-age=86400',
-    }
-    
-    # Static files (CSS, JavaScript, Images)
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-    
-    # Media files
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-else:
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
