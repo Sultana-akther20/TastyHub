@@ -169,7 +169,7 @@
       "is_featured": true,
       "preparation_time": 35,
       "ingredients": "Lamb, saffron, spices, onions, yogurt",
-      "image": "lamb-kabab-2.jpg"
+      "image": "lamb-kabab-1.jpg"
     }
   },
   {
@@ -244,7 +244,7 @@
       "is_featured": false,
       "preparation_time": 20,
       "ingredients": "Mixed vegetables, curry spices, coconut milk, basmati rice", 
-      "image": "vagetable-food-1.jpg"
+      "image": "vegetable-food-1.jpg"
     }
   },
   {
