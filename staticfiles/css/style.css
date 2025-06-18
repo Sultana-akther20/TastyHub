@@ -101,3 +101,12 @@ z-index: -1;
   font-weight: 700;
   font-style: normal;
 }
+
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 120px;
+    }
+    body{
+        height: calc(100vh - 120px);
+    }
+}
