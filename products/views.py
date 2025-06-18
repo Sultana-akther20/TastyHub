@@ -11,8 +11,20 @@ def all_products(request):
     """Display all products including filtering and searching"""
     products = Product.objects.all()
     query = None
+    current_categories = None  # Initialize this variable properly
     
     if request.GET:
+        if 'category' in request.GET:
+            category_names = request.GET['category'].split(',')
+            # Handle URL encoding (spaces become %20)
+            category_names = [name.strip().replace('%20', ' ') for name in category_names]
+           
+            
+            products = products.filter(category__name__in=category_names)
+            current_categories = Category.objects.filter(name__in=category_names)
+            
+           
+            
         if 'q' in request.GET:
             query = request.GET.get('q')
             if not query:
@@ -26,7 +38,7 @@ def all_products(request):
     context = {
         'products': products,
         'categories': Category.objects.filter(is_active=True, parent=None).order_by('order'),
-        'current_category': request.GET.get('category', ''),
+        'current_categories': current_categories,  # This will be None if no category filter
         'search_term': query,
     }
     
