@@ -87,10 +87,10 @@
                 Main Dish
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="homeware-link">
-                <a href="{% url 'products' %}" class="dropdown-item">Lamb</a>
-                <a href="{% url 'products' %}" class="dropdown-item">Chicken</a>
-                <a href="{% url 'products' %}" class="dropdown-item">Vegeterian</a>
-                <a href="{% url 'products' %}" class="dropdown-item">All Items</a>
+                <a href="{% url 'products' %}?category=Lamb" class="dropdown-item">Lamb</a>
+                <a href="{% url 'products' %}?category=Chicken" class="dropdown-item">Chicken</a>
+                <a href="{% url 'products' %}?category=Vegetarian" class="dropdown-item">Vegetarian</a>
+                <a href="{% url 'products' %}?category=Lamb,Chicken,Vegetarian" class="dropdown-item">All Items</a>
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -98,9 +98,9 @@
                 Special Offers
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="specials-link">
-                <a href="{% url 'products' %}" class="dropdown-item">Platters for 2 people</a>
-                <a href="{% url 'products' %}" class="dropdown-item">Platters for 4 people</a>
-                <a href="{% url 'products' %}" class="dropdown-item">Platters for 6 people</a>
+                <a href="{% url 'products' %}?category=Platters%20for%202%20people" class="dropdown-item">Platters for 2 people</a>
+                <a href="{% url 'products' %}?category=Platters%20for%204%20people" class="dropdown-item">Platters for 4 people</a>
+                <a href="{% url 'products' %}?category=Platters%20for%206%20people" class="dropdown-item">Platters for 6 people</a>
             </div>
         </li>
     </ul>
