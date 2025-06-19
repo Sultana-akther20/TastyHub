@@ -2,7 +2,6 @@ html {
     height: 100%;
 }
 
-
 body {
     background: url('/static/images/food-menu.jpg') no-repeat center center fixed;
     background-size: cover;
@@ -48,12 +47,12 @@ body {
     color: white;
 }
 
-.product{
-position: fixed;
-height: 100%;
-width: 100%;
-background-color: aliceblue;
-z-index: -1;
+.product {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: aliceblue;
+    z-index: -1;
 }
 
 .text-black {
@@ -64,21 +63,99 @@ z-index: -1;
     border: 1px solid black !important;
 }
 
-.border-black {
-    border:1px solid black !important;
-}
-
 .bg-black {
     background: #000 !important;
 }
 
-/* -------------------------------- Media Queries */
+/* Enhanced Back to Top Button */
+.back-to-top-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    height: 60px;
+    width: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    z-index: 1000;
+    display: none; /* Hidden by default, shown via JavaScript */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
 
+.back-to-top-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.back-to-top-button:active {
+    transform: translateY(-1px);
+}
+
+.scroll-up-link {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.scroll-up-link:hover {
+    color: white;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+
+.scroll-up-link:focus {
+    outline: none;
+    color: white;
+    text-decoration: none;
+}
+
+/* Alternative button styles - uncomment to use */
+/*
+.back-to-top-button {
+    background: #28a745;
+}
+
+.back-to-top-button:hover {
+    background: #218838;
+}
+*/
+
+/*
+.back-to-top-button {
+    background: #dc3545;
+}
+
+.back-to-top-button:hover {
+    background: #c82333;
+}
+*/
+
+/*
+.back-to-top-button {
+    background: #ffc107;
+    color: #212529 !important;
+}
+
+.back-to-top-button:hover {
+    background: #e0a800;
+}
+*/
+
+.lato-bold {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* -------------------------------- Media Queries */
 /* Slightly larger container on xl screens */
 @media (min-width: 1200px) {
-  .container {
-    max-width: 80%;
-  }
+    .container {
+        max-width: 80%;
+    }
 }
 
 /* fixed top navbar only on medium and up */
@@ -90,23 +167,43 @@ z-index: -1;
         left: 0;
         z-index: 1030;
     }
-
+    
     .header-container {
         padding-top: 164px;
     }
-}
-
-.lato-bold {
-  font-family: "Lato", sans-serif;
-  font-weight: 700;
-  font-style: normal;
 }
 
 @media (max-width: 991px) {
     .header-container {
         padding-top: 120px;
     }
-    body{
+    
+    body {
         height: calc(100vh - 120px);
+    }
+    
+    /* Adjust button size on mobile */
+    .back-to-top-button {
+        height: 50px;
+        width: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .scroll-up-link {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .back-to-top-button {
+        height: 45px;
+        width: 45px;
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .scroll-up-link {
+        font-size: 14px;
     }
 }
