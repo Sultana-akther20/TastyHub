@@ -20,25 +20,25 @@ def cart_contents(request):
         })
     
     # Convert settings values to Decimal for consistent calculation
-    free_delivery_threshold = Decimal(str(settings.FREE_DELEVERY_THRESHOLD))
-    standard_delivery_rate = Decimal(str(settings.STANDARD_DELEVERY)) / 100
+    free_delivery_threshold = Decimal(str(settings.FREE_DELIVERY_THRESHOLD))
+    standard_delivery_rate = Decimal(str(settings.STANDARD_DELIVERY)) / 100
     
     if total < free_delivery_threshold:
-        delevery = total * standard_delivery_rate
-        free_delevery_delta = free_delivery_threshold - total
+        delivery = total * standard_delivery_rate
+        free_delivery_delta = free_delivery_threshold - total
     else:
-        delevery = 0
-        free_delevery_delta = 0
+        delivery = 0
+        free_delivery_delta = 0
     
-    grand_total = total + delevery
+    grand_total = total + delivery
     
     context = {
         'cart_items': cart_items,
         'total': total,
         'item_count': item_count,
-        'delevery': delevery,
-        'free_delevery_delta': free_delevery_delta,
+        'delivery': delivery,
+        'free_delivery_delta': free_delivery_delta,
         'grand_total': grand_total,
-        'free_delevery_threshold': free_delivery_threshold,
+        'free_delivery_threshold': free_delivery_threshold,
     }
     return context

@@ -176,8 +176,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-FREE_DELEVERY_THRESHOLD = 30.00  # Amount in dollars for free delivery
-STANDARD_DELEVERY = 10.00  # Standard delivery charge in dollars
+FREE_DELIVERY_THRESHOLD = 30.00  # Amount in dollars for free delivery
+STANDARD_DELIVERY = 10.00  # Standard delivery charge in dollars
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
