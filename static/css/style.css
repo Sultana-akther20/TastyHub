@@ -112,37 +112,21 @@ body {
     text-decoration: none;
 }
 
-/* Alternative button styles - uncomment to use */
-/*
-.back-to-top-button {
-    background: #28a745;
+.btn-outline-black{
+    background: white;
+    color: black !important;
+    border: 1px solid black;
+}
+.btn-outline-black:hover,
+.btn-outline-black:active,
+.btn-outline-black:focus {
+    background: black;
+    color: white !important;
+    border-color: black;
 }
 
-.back-to-top-button:hover {
-    background: #218838;
-}
-*/
 
-/*
-.back-to-top-button {
-    background: #dc3545;
-}
 
-.back-to-top-button:hover {
-    background: #c82333;
-}
-*/
-
-/*
-.back-to-top-button {
-    background: #ffc107;
-    color: #212529 !important;
-}
-
-.back-to-top-button:hover {
-    background: #e0a800;
-}
-*/
 .cart-container {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -165,11 +149,11 @@ body {
     animation: gradientShift 3s ease infinite;
 }
 
-@keyframes gradientShift {
+/*@keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
-}
+}*/
 
 .gradient-hr {
     border: none;
@@ -182,10 +166,10 @@ body {
     animation: float 3s ease-in-out infinite;
 }
 
-@keyframes float {
+/*@keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
-}
+}*/
 
 .cart-items-container {
     border: 1px solid rgba(102, 126, 234, 0.1);

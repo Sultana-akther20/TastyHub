@@ -28,7 +28,10 @@
 
                 <!-- Cart Content -->
                 <div class="cart-content">
-                    {% if bag_items %}
+                    {% if cart_items %}
+                    <div class="table-responsive rounded">
+                        {{cart_items}}
+                    </div>
                         <!-- Cart Items Section -->
                         <div class="cart-items-container bg-glass p-3 rounded mb-4">
                             <div class="table-responsive">
