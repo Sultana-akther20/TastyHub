@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load cart_tools %}
 {% load i18n %}
 {% block page_header %}
 <div class="container header-container">
@@ -31,7 +32,7 @@
                         <table class="table table-sm table-borderless">
                             <thead class="text-black">
                                 <tr>
-                                    <th scope="col"></th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Product Info</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
@@ -93,7 +94,7 @@
                                         </form>
                                     </td>
                                     <td class="p-3">
-                                        <p class="my-0">£{{ item.product.price|floatformat:2 }}</p>
+                                        <p class="my-0">£{{ item.product.price | calc_subtotal:item.quantity  }}</p>
                                     </td>
                                     <td class="p-3">
                                         <a class="update-link text-info d-block"
