@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'checkout',
+    #others
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +68,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'feast.urls'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -82,6 +86,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'cart.cart-context.cart_contents',  # Custom context processor for cart
             ],
+            'bultins':[
+                'crispy_forms.templatestags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_field',
+            ]
         },
     },
 ]
