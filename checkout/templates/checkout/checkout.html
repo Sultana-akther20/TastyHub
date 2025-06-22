@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% load cart_tools %}
 {% load i18n %}
-{% block extra_css%}
-<link rel="stylesheet" href="{% static 'css/style-checkout.css' %}">
-{%endblock%}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-checkout.css' %}">
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">-->
+{% endblock %}
 
 {% block page_header %}
 <div class="container header-container">
@@ -16,19 +18,201 @@
 {% endblock %}
 
 {% block content %}
-<div class="overlay"></div>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <hr>
-            <h2 class="logo-font mb-4">Shopping Bag</h2>
-            <hr>
+<div class="checkout-background-overlay"></div>
+<div class="checkout-main-container">
+    <!-- Header Section -->
+    <div class="checkout-header-section">
+        <h1 class="checkout-page-title">Complete Your Order
+        </h1>
+        <p class="checkout-page-subtitle">Secure checkout powered by TastyHub</p>
+    </div>
+    
+    <div class="checkout-content-wrapper">
+        <!-- Order Summary Card -->
+        <div class="order-summary-card">
+            <div class="card-header-modern">
+                <h2 class="card-title-primary">
+                    Order Summary
+                </h2>
+            </div>
+            <div class="card-body-modern">
+                <!-- Order Items -->
+                <div class="order-items-list">
+                    {% for item in cart_items %}
+                    <div class="order-item-row">
+                        <div class="item-image-container">
+                            <a href="{% url 'details' item.product.id %}">
+                                {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="item-image-modern">
+                                {% else %}
+                                <img src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}" class="item-image-modern">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="item-details-section">
+                            <h4 class="item-name-modern">{{ item.product.name }}</h4>
+                            <span class="item-quantity-modern">Qty: {{ item.quantity }}</span>
+                        </div>
+                        <div class="item-price-modern">£{{ item.product.price | calc_subtotal:item.quantity }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Order Totals -->
+                <div class="order-totals-section">
+                    <div class="total-row-modern">
+                        <span>Subtotal:</span>
+                        <span>£{{ total | floatformat:2 }}</span>
+                    </div>
+                    <div class="total-row-modern">
+                        <span>Delivery:</span>
+                        <span>£{{ delivery | floatformat:2 }}</span>
+                    </div>
+                    <div class="total-row-modern">
+                        <span>Grand Total:</span>
+                        <span>£{{ grand_total | floatformat:2 }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Checkout Form Card -->
+        <div class="checkout-form-card">
+            <div class="card-header-modern">
+                <h2 class="card-title-primary">
+                    <div class="card-title-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    Customer Details
+                </h2>
+            </div>
+            <div class="card-body-modern">
+                <p class="text-muted mb-4">Please fill in your details below to complete your order.</p>
+                
+                <form method="POST" id="payment-form" action="{% url 'checkout' %}">
+                    {% csrf_token %}
+                    
+                    <!-- Personal Details Section -->
+                    <div class="checkout-form-section">
+                        <div class="form-section-header">
+                            <div class="form-section-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="form-section-title">Personal Information</h3>
+                        </div>
+                        
+                        <fieldset class="rounded px-3 mb-5">
+                            <legend class="fieldset-label small text-black px-2 w-auto">Details</legend>
+                            {{ order_form.full_name | as_crispy_field }}
+                            {{ order_form.email | as_crispy_field }}
+                        </fieldset>
+                    </div>
+                    
+                    <!-- Delivery Details Section -->
+                    <div class="checkout-form-section">
+                        <div class="form-section-header">
+                            <div class="icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <h3 class="form-section-title">Delivery Information</h3>
+                        </div>
+                        
+                        <fieldset class="rounded px-3 mb-5">
+                            <legend class="fieldset-label small text-black px-2 w-auto"></legend>
+                            {{ order_form.phone_number | as_crispy_field }}
+                            {{ order_form.country | as_crispy_field }}
+                            {{ order_form.postcode | as_crispy_field }}
+                            {{ order_form.town_or_city | as_crispy_field }}
+                            {{ order_form.street_address1 | as_crispy_field }}
+                            {{ order_form.street_address2 | as_crispy_field }}
+                            {{ order_form.county | as_crispy_field }}
+                            
+                            <!-- Save Info Section -->
+                            <div class="save-info-section">
+                                <div class="form-check form-check-inline float-right mr-0">
+                                    {% if user.is_authenticated %}
+                                    <div class="save-info-checkbox">
+                                        <input class="modern-checkbox" type="checkbox" id="id-save-info" name="save-info" checked>
+                                        <label class="form-check-label" for="id-save-info">
+                                            <strong>Save this information</strong> for faster checkout next time
+                                        </label>
+                                    </div>
+                                    {% else %}
+                                    <label class="form-check-label" for="id-save-info">
+                                        <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
+                                        <a class="text-info" href="{% url 'account_login' %}">Login</a> to save this information.
+                                    </label> 
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    
+                    <!-- Payment Section -->
+                    <div class="checkout-form-section">
+                        <div class="form-section-header">
+                            <div class="form-section-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <h3 class="form-section-title">Payment Details</h3>
+                        </div>
+                        
+                        <fieldset class="px-3">
+                            <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
+                            <div class="payment-section">
+                                <div class="stripe-card-container">
+                                    <!-- Stripe card element -->
+                                    <div class="mb-3" id="card-payment"></div>
+                                </div>
+                                <!-- Error form -->
+                                <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    
+                    <!-- Checkout Actions -->
+                    <div class="checkout-actions">
+                        <a href="{% url 'view_cart' %}" class="btn-modern btn-back-modern">
+                            <i class="fas fa-chevron-left"></i>
+                            Back to Cart
+                        </a>
+                        
+                        <button type="submit" id="submit-button" class="btn-modern btn-complete-modern">
+                            <span class="font-weight-bold">Complete Order</span>
+                            <span class="icon"><i class="fas fa-lock"></i></span>
+                        </button>
+                    </div>
+                    
+                    <!-- Charge Warning -->
+                    <div class="charge-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Your card will be charged <strong>£{{ grand_total | floatformat:2 }}</strong></span>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <p class="text-muted">Please fill in your details below to complete your order.</p>
-            </div>
-    </div>
-    </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script>
+    // Input animations
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Auto-focus first input if available
+    const firstInput = document.querySelector('.form-control');
+    if (firstInput) {
+        firstInput.focus();
+    }
+</script>
 {% endblock %}

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'checkout',
     #others
     'crispy_forms',
+    'crispy_bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -84,10 +85,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',  #required for allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
                 'cart.cart-context.cart_contents',  # Custom context processor for cart
             ],
-            'bultins':[
-                'crispy_forms.templatestags.crispy_forms_tags',
+            'builtins':[
+                'crispy_forms.templatetags.crispy_forms_tags',
                 'crispy_forms.templatetags.crispy_forms_field',
             ]
         },
