@@ -12,7 +12,7 @@ class OrderForm(forms.ModelForm):
             'street_address2', 'county'
         ]
         
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # Fixed: double underscore before and after init
         """Initialize the form with custom attributes."""
         super().__init__(*args, **kwargs)
         
@@ -42,8 +42,3 @@ class OrderForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False
-            
-            
-            
-            # Remove labels (optional - you can keep them if you want)
-            # self.fields[field].label = False

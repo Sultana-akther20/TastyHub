@@ -15,9 +15,15 @@ import os
 from dotenv import load_dotenv
 import dj_database_url
 
+# Load environment variables from .env file
 load_dotenv()
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-only-for-development')
+# Then use your environment variables like:
+SECRET_KEY = os.getenv('SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
+STRIPE_SECRET_KEY= os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_CURRENCY='gbp'
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,7 +92,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'cart.cart-context.cart_contents',  # Custom context processor for cart
+                'cart.context.cart_contents',  # Custom context processor for cart
             ],
             'builtins':[
                 'crispy_forms.templatetags.crispy_forms_tags',
