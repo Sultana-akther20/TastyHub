@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import dj_database_url
+from decimal import Decimal
 
 # Load environment variables from .env file
 load_dotenv()
@@ -193,8 +194,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-FREE_DELIVERY_THRESHOLD = 30.00  # Amount in dollars for free delivery
-STANDARD_DELIVERY = 10.00  # Standard delivery charge in dollars
+# Amount in dollars for free delivery
+# Standard delivery charge in dollars
+FREE_DELIVERY_THRESHOLD = Decimal('30.00')
+STANDARD_DELIVERY = Decimal('10.00')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

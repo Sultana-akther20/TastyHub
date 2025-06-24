@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Order Successful</h1>
+    <p>Your order <strong>{{ order.order_number }}</strong> has been processed!</p>
+    <p>A confirmation email has been sent to <strong>{{ order.email }}</strong>.</p>
+    <a href="{% url 'products' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+  </div>
+{% endblock %}
