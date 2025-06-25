@@ -198,6 +198,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Standard delivery charge in dollars
 FREE_DELIVERY_THRESHOLD = Decimal('30.00')
 STANDARD_DELIVERY = Decimal('10.00')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

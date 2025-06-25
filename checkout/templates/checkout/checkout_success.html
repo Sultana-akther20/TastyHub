@@ -1,10 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1>Order Successful</h1>
-    <p>Your order <strong>{{ order.order_number }}</strong> has been processed!</p>
-    <p>A confirmation email has been sent to <strong>{{ order.email }}</strong>.</p>
-    <a href="{% url 'products' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+<div class="container-fluid py-4" style="background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh;">
+  <div class="row justify-content-center">
+    <div class="col-11 col-sm-10 col-md-8 col-lg-6">
+      <div class="bg-light rounded shadow-lg p-4 text-center success-card">
+        <div class="success-icon mb-3" role="img" aria-label="Success">
+          <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+        </div>
+        <h1 class="text-success mb-3">Order Successful!</h1>
+        <p class="lead mb-2">
+          Your order <strong class="text-break">{{ order.order_number }}</strong> has been processed successfully!
+        </p>
+        <p class="mb-4">
+          A confirmation email has been sent to <strong class="text-break">{{ order.email }}</strong>.
+        </p>
+        <a href="{% url 'products' %}" class="btn btn-primary btn-lg w-100 w-md-auto">Continue Shopping</a>
+      </div>
+    </div>
   </div>
+</div>
+
+<style>
+  /* Hide unnecessary navigation/header items */
+  header.container-fluid.fixed-top,
+  #topnav,
+  .navbar,
+  #delivery-banner,
+  .navbar-nav,
+  .list-inline {
+    display: none !important;
+  }
+
+  /* Custom success card styling */
+  .success-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 2px solid #28a745;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  .success-icon i {
+    animation: popIn 0.6s ease-out;
+  }
+
+  /* Responsive typography adjustments */
+  @media (max-width: 768px) {
+    .success-icon i {
+      font-size: 2.5rem !important;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+    }
+
+    .lead {
+      font-size: 1rem;
+    }
+  }
+
+</style>
 {% endblock %}

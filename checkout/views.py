@@ -90,7 +90,7 @@ def checkout(request):
             'client_secret': intent.client_secret,
         }
 
-        #return render(request, template, context)
+        return render(request, template, context)
 
 
 
