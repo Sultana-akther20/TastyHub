@@ -24,6 +24,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
 STRIPE_SECRET_KEY= os.getenv('STRIPE_SECRET_KEY', '')
 STRIPE_CURRENCY='gbp'
+STRIPE_WH_SECRET =os.getenv('STRIPE_WH_SECRET', '')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
