@@ -66,9 +66,16 @@ $(document).ready(function() {
         //`);
         
         // Get form data for the payment intent
-        //var saveInfo = Boolean($('#id-save-info').attr('checked'));
-       // var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
-        
+        var saveInfo = Boolean($('#id-save-info').attr('checked'));
+        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+        var postData ={
+            'csrfmiddlewaretoken': csrfToken,
+            'client_secret': clientSecret,
+            'save_info': saveInfo,
+        };
+        var url='/checkout/cache_checkout_data/';
+
+        $.post(url, postData).done(function(){
         stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: card,
@@ -121,5 +128,8 @@ $(document).ready(function() {
                 }
             }
         });
-    });
+    }).fail(function (){
+        location.reload();
+    })
 });
+ });
