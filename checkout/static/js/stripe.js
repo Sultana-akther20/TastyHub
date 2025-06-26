@@ -58,14 +58,16 @@ $(document).ready(function() {
         // Disable card and submit button to prevent multiple submissions
         card.update({'disabled': true});
         $('#submit-button').attr('disabled', true);
-        $('#submit-button').html(`
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Processing...
-        `);
+        $('#payment-form').fadeToggle(100);
+        $('#loading-overlay').fadeToggle(100);
+        //$('#submit-button').html(`
+          //  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            //Processing...
+        //`);
         
         // Get form data for the payment intent
-        var saveInfo = Boolean($('#id-save-info').attr('checked'));
-        var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+        //var saveInfo = Boolean($('#id-save-info').attr('checked'));
+       // var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
         
         stripe.confirmCardPayment(clientSecret, {
             payment_method: {
