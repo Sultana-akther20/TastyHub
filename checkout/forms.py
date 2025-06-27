@@ -7,26 +7,29 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = [
-            'full_name', 'email', 'phone_number', 'country', 
-            'postcode', 'town_or_city', 'street_address1', 
-            'street_address2', 'county'
+            'full_name', 'email', 'street_address1', 
+            'street_address2', 'postcode', 'town_or_city', 
+            'phone_number', 'county', 'delivery_area'  # Add delivery_area here
         ]
         
-    def __init__(self, *args, **kwargs):  # Fixed: double underscore before and after init
+    def __init__(self, *args, **kwargs):
         """Initialize the form with custom attributes."""
         super().__init__(*args, **kwargs)
+        # Make delivery_area field more descriptive
+        self.fields['delivery_area'].widget.attrs['class'] = 'stripe-style-input form-select'
+        self.fields['delivery_area'].empty_label = "Select delivery area"
         
         # Define placeholders for each field
         placeholders = {
             'full_name': 'Full Name',
             'email': 'Email Address',
-            'phone_number': 'Phone Number',
-            'country': 'Country',
-            'postcode': 'Postcode',
-            'town_or_city': 'Town or City',
             'street_address1': 'Street Address 1',
             'street_address2': 'Street Address 2',
+            'town_or_city': 'Town or City',
+            'postcode': 'Postcode',
+            'phone_number': 'Phone Number',
             'county': 'County',
+            'delivery_area': 'Delivery Area',  # Add placeholder for delivery_area
         }
         
         # Set autofocus on first field

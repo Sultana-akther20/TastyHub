@@ -92,9 +92,8 @@ $(document).ready(function() {
                                 line1: $.trim(form.street_address1.value),
                                 line2: $.trim(form.street_address2.value),
                                 city: $.trim(form.town_or_city.value),
-                                country: $.trim(form.country.value),
-                                state: $.trim(form.county.value),
                                 postal_code: $.trim(form.postcode.value),
+                                state: $.trim(form.county.value),
                             }
                         }
                     },
@@ -105,7 +104,6 @@ $(document).ready(function() {
                             line1: $.trim(form.street_address1.value),
                             line2: $.trim(form.street_address2.value),
                             city: $.trim(form.town_or_city.value),
-                            country: $.trim(form.country.value),
                             postal_code: $.trim(form.postcode.value),
                             state: $.trim(form.county.value),
                         }
@@ -115,8 +113,13 @@ $(document).ready(function() {
                         handlePaymentError(result.error);
                     } else {
                         if (result.paymentIntent.status === 'succeeded') {
-                            // Payment succeeded, submit the form
-                            form.submit();
+                            // Add a small delay to ensure Stripe processing is complete
+                            setTimeout(function() {
+                                // Payment succeeded, submit the form normally
+                                // Remove the event listener to prevent infinite loop
+                                form.removeEventListener('submit', arguments.callee);
+                                form.submit();
+                            }, 500);
                         }
                     }
                 });
@@ -130,9 +133,13 @@ $(document).ready(function() {
     
     // Helper functions
     function validateForm() {
-        var requiredFields = ['full_name', 'email', 'phone_number', 'country', 
+        var requiredFields = ['full_name', 'email', 'phone_number', 
                              'town_or_city', 'street_address1', 'postcode'];
         var isValid = true;
+        
+        // Clear previous errors
+        $('.field-error').remove();
+        $('.is-invalid').removeClass('is-invalid');
         
         requiredFields.forEach(function(fieldName) {
             var field = form[fieldName];
@@ -176,9 +183,7 @@ $(document).ready(function() {
             submitButton.disabled = true;
             submitButton.innerHTML = `
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Processing...
-            `;
-            $('#payment-form').fadeOut(100);
+                Processing...`;
             showLoadingOverlay();
         } else {
             card.update({'disabled': false});
@@ -187,7 +192,6 @@ $(document).ready(function() {
                 <span class="font-weight-bold">Complete Order</span>
                 <span class="icon"><i class="fas fa-lock"></i></span>
             `;
-            $('#payment-form').fadeIn(100);
             hideLoadingOverlay();
         }
     }

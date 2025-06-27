@@ -127,7 +127,6 @@ class StripeWH_Handler:
                 lookup_name = shipping_details['name'] if shipping_details else billing_details['name']
                 lookup_email = billing_details['email']
                 lookup_phone = shipping_details['phone'] if shipping_details else billing_details['phone']
-                lookup_country = shipping_details['address']['country'] if shipping_details else billing_details['address']['country']
                 lookup_postcode = shipping_details['address']['postal_code'] if shipping_details else billing_details['address']['postal_code']
                 lookup_city = shipping_details['address']['city'] if shipping_details else billing_details['address']['city']
                 lookup_line1 = shipping_details['address']['line1'] if shipping_details else billing_details['address']['line1']
@@ -138,7 +137,6 @@ class StripeWH_Handler:
                     full_name__iexact=lookup_name,
                     email__iexact=lookup_email,
                     phone_number__iexact=lookup_phone,
-                    country__iexact=lookup_country,
                     postcode__iexact=lookup_postcode,
                     town_or_city__iexact=lookup_city,
                     street_address1__iexact=lookup_line1,
@@ -163,11 +161,14 @@ class StripeWH_Handler:
             order = None
             try:
                 # Create order using appropriate details
+                # Get delivery area from metadata or default to 'london'
+                delivery_area = intent['metadata'].get('delivery_area', 'london')
+                
                 order_data = {
                     'full_name': shipping_details['name'] if shipping_details else billing_details['name'],
                     'email': billing_details['email'],
                     'phone_number': shipping_details['phone'] if shipping_details else billing_details['phone'],
-                    'country': shipping_details['address']['country'] if shipping_details else billing_details['address']['country'],
+                    'delivery_area': delivery_area,
                     'postcode': shipping_details['address']['postal_code'] if shipping_details else billing_details['address']['postal_code'],
                     'town_or_city': shipping_details['address']['city'] if shipping_details else billing_details['address']['city'],
                     'street_address1': shipping_details['address']['line1'] if shipping_details else billing_details['address']['line1'],

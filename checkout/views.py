@@ -55,7 +55,6 @@ def checkout(request):
             'full_name': request.POST.get('full_name', '').strip(),
             'email': request.POST.get('email', '').strip(),
             'phone_number': request.POST.get('phone_number', '').strip(),
-            'country': request.POST.get('country', '').strip(),
             'postcode': request.POST.get('postcode', '').strip(),
             'town_or_city': request.POST.get('town_or_city', '').strip(),
             'street_address1': request.POST.get('street_address1', '').strip(),

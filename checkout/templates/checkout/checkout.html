@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load cart_tools %}
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block extra_css %}
@@ -119,12 +120,12 @@
                         
                         <fieldset class="rounded px-3 mb-5">
                             <legend class="fieldset-label small text-black px-2 w-auto"></legend>
-                            {{ order_form.phone_number | as_crispy_field }}
-                            {{ order_form.country | as_crispy_field }}
-                            {{ order_form.postcode | as_crispy_field }}
-                            {{ order_form.town_or_city | as_crispy_field }}
                             {{ order_form.street_address1 | as_crispy_field }}
                             {{ order_form.street_address2 | as_crispy_field }}
+                            {{ order_form.town_or_city | as_crispy_field }}
+                            {{ order_form.delivery_area | as_crispy_field }}
+                            {{ order_form.postcode | as_crispy_field }}
+                            {{ order_form.phone_number | as_crispy_field }}
                             {{ order_form.county | as_crispy_field }}
                             
                             <!-- Save Info Section -->
