@@ -1,26 +1,26 @@
 $(document).ready(function() {
-    // Get the keys from the template
+    // Better way to get the keys from the template
     var stripePublicKey = JSON.parse(document.getElementById('id_stripe_public_key').textContent);
     var clientSecret = JSON.parse(document.getElementById('id_client_secret').textContent);
     
-    // Validate keys
+    // Debug: Check if keys are properly loaded
+    console.log('Stripe Public Key:', stripePublicKey);
+    console.log('Client Secret:', clientSecret);
+    
+    // Check if keys exist before initializing Stripe
     if (!stripePublicKey) {
         console.error('Stripe publishable key is missing!');
-        showError('Payment system configuration error. Please contact support.');
         return;
     }
     
     if (!clientSecret) {
         console.error('Client secret is missing!');
-        showError('Payment initialization error. Please refresh and try again.');
         return;
     }
     
-    // Initialize Stripe
     var stripe = Stripe(stripePublicKey);
     var elements = stripe.elements();
     
-    // Card element styling
     var style = {
         base: {
             color: '#000',
@@ -45,10 +45,8 @@ $(document).ready(function() {
         var displayError = document.getElementById('card-errors');
         if (event.error) {
             displayError.textContent = event.error.message;
-            displayError.style.display = 'block';
         } else {
             displayError.textContent = '';
-            displayError.style.display = 'none';
         }
     });
     
@@ -56,31 +54,67 @@ $(document).ready(function() {
     var form = document.getElementById('payment-form');
     var submitButton = document.getElementById('submit-button');
     
+    // Debug: Check if form and button exist
+    console.log('Form element:', form);
+    console.log('Submit button:', submitButton);
+    
+    if (!form) {
+        console.error('Payment form not found! Check your HTML.');
+        return;
+    }
+    
+    if (!submitButton) {
+        console.error('Submit button not found! Check your HTML.');
+        return;
+    }
+    
+    // Add click event listener to submit button as backup
+    submitButton.addEventListener('click', function(e) {
+        console.log('Submit button clicked!');
+        e.preventDefault();
+        handleFormSubmission();
+    });
+    
     form.addEventListener('submit', function(ev) {
         ev.preventDefault();
+        console.log('Form submission started via submit event');
+        handleFormSubmission();
+    });
+    
+    function handleFormSubmission() {
+        console.log('handleFormSubmission called');
         
-        // Validate form before processing
-        if (!validateForm()) {
-            return;
-        }
-        
-        // Disable form to prevent multiple submissions
-        setLoadingState(true);
+        // Disable card and submit button to prevent multiple submissions
+        card.update({'disabled': true});
+        $('#submit-button').attr('disabled', true);
+        $('#submit-button').html(`
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Processing...
+        `);
         
         // Get form data for the payment intent
-        var saveInfo = Boolean($('#id-save-info').prop('checked'));
-        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+        var saveInfo = Boolean($('#id-save-info').attr('checked'));
+        var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
+        
+        // First, cache the checkout data
         var postData = {
             'csrfmiddlewaretoken': csrfToken,
             'client_secret': clientSecret,
             'save_info': saveInfo,
         };
+        
         var url = '/checkout/cache_checkout_data/';
         
-        // Cache checkout data first
+        console.log('Sending cache request to:', url);
+        console.log('Post data:', postData);
+        
         $.post(url, postData)
-            .done(function() {
-                // Confirm payment with Stripe
+            .done(function(response) {
+                console.log('Cache request succeeded:', response);
+                
+                // If caching succeeds, proceed with payment confirmation
+                console.log('Starting payment confirmation...');
+                
                 stripe.confirmCardPayment(clientSecret, {
                     payment_method: {
                         card: card,
@@ -92,8 +126,9 @@ $(document).ready(function() {
                                 line1: $.trim(form.street_address1.value),
                                 line2: $.trim(form.street_address2.value),
                                 city: $.trim(form.town_or_city.value),
-                                postal_code: $.trim(form.postcode.value),
+                                country: 'GB',
                                 state: $.trim(form.county.value),
+                                postal_code: $.trim(form.postcode.value),
                             }
                         }
                     },
@@ -104,139 +139,99 @@ $(document).ready(function() {
                             line1: $.trim(form.street_address1.value),
                             line2: $.trim(form.street_address2.value),
                             city: $.trim(form.town_or_city.value),
+                            country: 'GB',
                             postal_code: $.trim(form.postcode.value),
                             state: $.trim(form.county.value),
                         }
                     },
                 }).then(function(result) {
+                    console.log('Payment confirmation result:', result);
+                    
                     if (result.error) {
-                        handlePaymentError(result.error);
+                        console.error('Payment error:', result.error);
+                        
+                        var errorDiv = document.getElementById('card-errors');
+                        var html = `
+                            <span class="icon" role="alert">
+                                <i class="fas fa-times"></i>
+                            </span>
+                            <span>${result.error.message}</span>
+                        `;
+                        $(errorDiv).html(html);
+                        
+                        // Re-enable card and submit button
+                        resetForm();
+                        
                     } else {
+                        console.log('Payment Intent status:', result.paymentIntent.status);
+                        
                         if (result.paymentIntent.status === 'succeeded') {
-                            // Add a small delay to ensure Stripe processing is complete
-                            setTimeout(function() {
-                                // Payment succeeded, submit the form normally
-                                // Remove the event listener to prevent infinite loop
-                                form.removeEventListener('submit', arguments.callee);
-                                form.submit();
-                            }, 500);
+                            console.log('Payment succeeded! Submitting form...');
+                            
+                            // Add the client_secret to the form before submitting
+                            var hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'client_secret';
+                            hiddenInput.value = clientSecret;
+                            form.appendChild(hiddenInput);
+                            
+                            // Submit the form
+                            form.submit();
+                        } else {
+                            console.log('Payment not succeeded, status:', result.paymentIntent.status);
+                            resetForm();
                         }
                     }
+                }).catch(function(error) {
+                    console.error('Payment confirmation error:', error);
+                    showError('There was an error processing your payment. Please try again.');
+                    resetForm();
                 });
+                
             })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                console.error('Cache checkout data failed:', textStatus, errorThrown);
-                showError('Unable to process payment. Please try again.');
-                setLoadingState(false);
+            .fail(function(xhr, status, error) {
+                console.error('Cache request failed:', status, error);
+                console.error('Response:', xhr.responseText);
+                console.error('Status code:', xhr.status);
+                
+                // Show specific error message
+                var errorMessage = 'There was an error processing your payment. Please try again.';
+                if (xhr.status === 404) {
+                    errorMessage = 'Cache endpoint not found. Please contact support.';
+                } else if (xhr.status === 403) {
+                    errorMessage = 'Permission denied. Please refresh the page and try again.';
+                }
+                
+                showError(errorMessage);
+                resetForm();
             });
-    });
-    
-    // Helper functions
-    function validateForm() {
-        var requiredFields = ['full_name', 'email', 'phone_number', 
-                             'town_or_city', 'street_address1', 'postcode'];
-        var isValid = true;
-        
-        // Clear previous errors
-        $('.field-error').remove();
-        $('.is-invalid').removeClass('is-invalid');
-        
-        requiredFields.forEach(function(fieldName) {
-            var field = form[fieldName];
-            if (!field.value.trim()) {
-                showFieldError(field, 'This field is required');
-                isValid = false;
-            }
-        });
-        
-        // Validate email format
-        var emailField = form.email;
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (emailField.value && !emailRegex.test(emailField.value)) {
-            showFieldError(emailField, 'Please enter a valid email address');
-            isValid = false;
-        }
-        
-        return isValid;
     }
     
-    function showFieldError(field, message) {
-        var errorDiv = field.parentNode.querySelector('.field-error');
-        if (!errorDiv) {
-            errorDiv = document.createElement('div');
-            errorDiv.className = 'field-error text-danger small mt-1';
-            field.parentNode.appendChild(errorDiv);
-        }
-        errorDiv.textContent = message;
-        field.classList.add('is-invalid');
-        
-        // Remove error on field change
-        field.addEventListener('input', function() {
-            errorDiv.textContent = '';
-            field.classList.remove('is-invalid');
-        }, { once: true });
-    }
-    
-    function setLoadingState(loading) {
-        if (loading) {
-            card.update({'disabled': true});
-            submitButton.disabled = true;
-            submitButton.innerHTML = `
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Processing...`;
-            showLoadingOverlay();
-        } else {
-            card.update({'disabled': false});
-            submitButton.disabled = false;
-            submitButton.innerHTML = `
-                <span class="font-weight-bold">Complete Order</span>
-                <span class="icon"><i class="fas fa-lock"></i></span>
-            `;
-            hideLoadingOverlay();
-        }
-    }
-    
-    function handlePaymentError(error) {
+    // Helper function to show errors
+    function showError(message) {
         var errorDiv = document.getElementById('card-errors');
         var html = `
             <span class="icon" role="alert">
                 <i class="fas fa-times"></i>
             </span>
-            <span>${error.message}</span>
+            <span>${message}</span>
         `;
         $(errorDiv).html(html);
-        errorDiv.style.display = 'block';
-        
-        // Scroll to error
-        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
-        setLoadingState(false);
     }
     
-    function showError(message) {
-        var errorDiv = document.getElementById('card-errors');
-        if (errorDiv) {
-            errorDiv.innerHTML = `
-                <span class="icon" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </span>
-                <span>${message}</span>
-            `;
-            errorDiv.style.display = 'block';
-        }
+    // Helper function to reset the form
+    function resetForm() {
+        card.update({'disabled': false});
+        $('#submit-button').attr('disabled', false);
+        $('#submit-button').html(`
+            <span class="font-weight-bold">Complete Order</span>
+            <span class="icon"><i class="fas fa-lock"></i></span>
+        `);
     }
     
-    function showLoadingOverlay() {
-        var overlay = document.getElementById('loading-overlay');
-        if (overlay) {
-            overlay.style.display = 'flex';
-        }
-    }
-    
-    function hideLoadingOverlay() {
-        var overlay = document.getElementById('loading-overlay');
-        if (overlay) {
-            overlay.style.display = 'none';
-        }
-    }
+    // Additional debugging for form elements
+    console.log('Form found:', form);
+    console.log('Card element mounted on:', document.getElementById('card-payment'));
+    console.log('Error div found:', document.getElementById('card-errors'));
+    console.log('Submit button found:', document.getElementById('submit-button'));
 });

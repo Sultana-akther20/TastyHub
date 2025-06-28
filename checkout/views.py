@@ -1,3 +1,4 @@
+# views.py - Fixed version with better error handling
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib import messages
@@ -25,7 +26,7 @@ def cache_checkout_data(request):
         cart = request.session.get('cart', {})
         
         stripe.PaymentIntent.modify(pid, metadata={
-            'cart': json.dumps(cart),  # Changed from 'bag' to 'cart'
+            'cart': json.dumps(cart),
             'save_info': request.POST.get('save_info'),
             'username': request.user.username if request.user.is_authenticated else 'Anonymous',
         })
@@ -45,12 +46,24 @@ def checkout(request):
         return redirect(reverse('view_cart'))
     
     if request.method == 'POST':
+        logger.info("Processing POST request for checkout")
         cart = request.session.get('cart', {})
         
         if not cart:
+            logger.warning("Cart is empty during checkout POST")
             messages.error(request, 'Your cart is empty.')
             return redirect(reverse('products'))
         
+        # Get the client_secret and extract payment intent ID
+        client_secret = request.POST.get('client_secret', '')
+        logger.info(f"Client secret received: {client_secret[:20]}...")
+        
+        if not client_secret:
+            logger.error("No client_secret in POST data")
+            messages.error(request, 'Payment information is missing. Please try again.')
+            return redirect(reverse('checkout'))
+        
+        # Fixed: Include delivery_area in form data
         form_data = {
             'full_name': request.POST.get('full_name', '').strip(),
             'email': request.POST.get('email', '').strip(),
@@ -60,18 +73,23 @@ def checkout(request):
             'street_address1': request.POST.get('street_address1', '').strip(),
             'street_address2': request.POST.get('street_address2', '').strip(),
             'county': request.POST.get('county', '').strip(),
+            'delivery_area': request.POST.get('delivery_area', 'london'),  # Fixed: Add delivery_area
         }
         
+        logger.info(f"Form data: {form_data}")
         order_form = OrderForm(form_data)
+        
         if order_form.is_valid():
+            logger.info("Order form is valid, creating order")
             try:
                 with transaction.atomic():
                     # Create order
                     order = order_form.save(commit=False)
-                    pid = request.POST.get('client_secret', '').split('_secret')[0]
+                    pid = client_secret.split('_secret')[0]
                     order.stripe_pid = pid
-                    order.original_bag = json.dumps(cart)  # Fixed: was original_cart
+                    order.original_cart = json.dumps(cart)  # Fixed: Use original_cart (not original_bag)
                     order.save()
+                    logger.info(f"Order created with ID: {order.id}, Order number: {order.order_number}")
                     
                     # Create order line items
                     for item_id, item_data in cart.items():
@@ -84,6 +102,7 @@ def checkout(request):
                                     quantity=item_data,
                                 )
                                 order_line_item.save()
+                                logger.info(f"Created order item: {product.name} x {item_data}")
                             else:
                                 # Handle products with size variations
                                 for size, quantity in item_data.get('items_by_size', {}).items():
@@ -91,10 +110,11 @@ def checkout(request):
                                         order=order,
                                         product=product,
                                         quantity=quantity,
-                                        product_size=size,
                                     )
                                     order_line_item.save()
+                                    logger.info(f"Created sized order item: {product.name} ({size}) x {quantity}")
                         except Product.DoesNotExist:
+                            logger.error(f"Product with ID {item_id} not found")
                             messages.error(request, (
                                 f"One of the products in your cart wasn't found in our database. "
                                 "Please call us for assistance!"
@@ -104,16 +124,29 @@ def checkout(request):
                     # Clear the cart
                     if 'cart' in request.session:
                         del request.session['cart']
+                        logger.info("Cart cleared from session")
                     
+                    logger.info(f"Redirecting to checkout_success with order_number: {order.order_number}")
                     return redirect(reverse('checkout_success', args=[order.order_number]))
                     
             except Exception as e:
-                logger.error(f"Error processing order: {e}")
+                logger.error(f"Error processing order: {e}", exc_info=True)
                 messages.error(request, 'There was an error processing your order. Please try again.')
                 return redirect(reverse('checkout'))
         else:
+            logger.error(f"Order form validation failed: {order_form.errors}")
             messages.error(request, 'There was an error with your form. Please check your information.')
+            # Re-render the form with errors
+            current_cart = cart_contents(request)
+            context = {
+                'order_form': order_form,
+                'stripe_publishable_key': stripe_publishable_key,
+                'client_secret': client_secret,
+            }
+            return render(request, 'checkout/checkout.html', context)
+            
     else:
+        # GET request - show checkout form
         cart = request.session.get('cart', {})
         if not cart:
             messages.error(request, 'Your cart is empty. Please add items before checking out.')
@@ -132,6 +165,7 @@ def checkout(request):
                     'enabled': True,
                 },
             )
+            logger.info(f"Payment intent created: {intent.id}")
         except Exception as e:
             logger.error(f"Error creating payment intent: {e}")
             messages.error(request, 'There was an error setting up your payment. Please try again.')
@@ -141,23 +175,26 @@ def checkout(request):
         
         if not stripe_publishable_key:
             messages.warning(request, 'Stripe public key is missing. Please contact support.')
-        
-        template = 'checkout/checkout.html'
-        context = {
-            'order_form': order_form,
-            'stripe_publishable_key': stripe_publishable_key,
-            'client_secret': intent.client_secret,
-        }
-        return render(request, template, context)
+    
+    template = 'checkout/checkout.html'
+    context = {
+        'order_form': order_form,
+        'stripe_publishable_key': stripe_publishable_key,
+        'client_secret': intent.client_secret,
+    }
+    return render(request, template, context)
 
 def checkout_success(request, order_number):
     """Handle successful checkouts"""
+    logger.info(f"checkout_success called with order_number: {order_number}")
     try:
         order = get_object_or_404(Order, order_number=order_number)
+        logger.info(f"Order found: {order.id} - {order.full_name}")
         
         # Clear any remaining cart data
         if 'cart' in request.session:
             del request.session['cart']
+            logger.info("Cleared remaining cart data from session")
         
         messages.success(request, f'Order successfully processed! '
                                  f'Your order number is {order_number}. '
@@ -167,9 +204,10 @@ def checkout_success(request, order_number):
         context = {
             'order': order,
         }
+        logger.info("Rendering checkout_success template")
         return render(request, template, context)
         
     except Exception as e:
-        logger.error(f"Error in checkout success: {e}")
+        logger.error(f"Error in checkout success: {e}", exc_info=True)
         messages.error(request, 'There was an error displaying your order confirmation.')
         return redirect(reverse('products'))

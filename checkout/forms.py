@@ -9,12 +9,13 @@ class OrderForm(forms.ModelForm):
         fields = [
             'full_name', 'email', 'street_address1', 
             'street_address2', 'postcode', 'town_or_city', 
-            'phone_number', 'county', 'delivery_area'  # Add delivery_area here
+            'phone_number', 'county', 'delivery_area'  # Include delivery_area
         ]
         
     def __init__(self, *args, **kwargs):
         """Initialize the form with custom attributes."""
         super().__init__(*args, **kwargs)
+        
         # Make delivery_area field more descriptive
         self.fields['delivery_area'].widget.attrs['class'] = 'stripe-style-input form-select'
         self.fields['delivery_area'].empty_label = "Select delivery area"
@@ -29,7 +30,7 @@ class OrderForm(forms.ModelForm):
             'postcode': 'Postcode',
             'phone_number': 'Phone Number',
             'county': 'County',
-            'delivery_area': 'Delivery Area',  # Add placeholder for delivery_area
+            'delivery_area': 'Delivery Area',
         }
         
         # Set autofocus on first field
@@ -37,6 +38,10 @@ class OrderForm(forms.ModelForm):
         
         # Apply styling and placeholders to all fields
         for field in self.fields:
+            if field == 'delivery_area':
+                # Skip placeholder for choice field
+                continue
+                
             if self.fields[field].required:
                 placeholder = f'{placeholders[field]} *'
             else:
