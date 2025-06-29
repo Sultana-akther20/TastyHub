@@ -504,6 +504,9 @@ fieldset {
     gap: 0.5rem;
 }
 
+
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .checkout-page-title {

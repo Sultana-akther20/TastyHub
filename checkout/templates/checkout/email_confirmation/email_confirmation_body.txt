@@ -1,0 +1,20 @@
+Hello {{order.full_name}}
+
+This is a confirmation for your order from Tasty Hub.
+
+Your Order Number: {{order.order_number}}
+Order Date: {{order.date}}
+
+Order Price Total: £{{order.grand_total}}
+Delivery: £{{order.delivery_cost}}
+
+Your order will be delivered soon. We will contact you when your order is out for delivery. 
+
+Feel free to contact us at your convenience.
+
+Thank You!
+
+Sincerely,
+
+Tasty Hub
+
