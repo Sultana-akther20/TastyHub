@@ -1,19 +1,19 @@
 <!-- Mobile Navigation Items (only visible on mobile/tablet, hidden on desktop) -->
-<ul class="list-inline list-unstyled text-center text-lg-right my-0 d-lg-none">
+<ul class="list-inline list-unstyled text-center text-lg-right my-0 mobile-nav-only d-lg-none">
     <li class="list-inline-item">
-        <a class="text-black nav-link" href="#" id="mobile-search" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="text-primary-dark nav-link" href="#" id="mobile-search-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="text-center">
                 <div><i class="fas fa-search fa-lg"></i></div>
-                <p class="my-0">Search</p>
+                <p class="my-0 small">Search</p>
             </div>
         </a>
-        <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
+        <div class="dropdown-menu border-0 w-100 p-3 rounded-3 my-0 shadow-lg" aria-labelledby="mobile-search-toggle">
             <form class="form" method="GET" action="{% url 'products' %}">
                 <div class="input-group w-100">
-                    <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site">
+                    <input class="form-control border border-primary-dark rounded-start-3" type="text" name="q" placeholder="Search delicious meals...">
                     <div class="input-group-append">
-                        <button class="form-control form-control btn btn-black border border-black rounded-0" type="submit">
-                            <span class="icon">
+                        <button class="form-control btn btn-primary-dark border border-primary-dark rounded-end-3" type="submit">
+                            <span class="btn-icon">
                                 <i class="fas fa-search"></i>
                             </span>
                         </button>
@@ -23,82 +23,128 @@
         </div>
     </li>
     <li class="list-inline-item dropdown">
-        <a class="text-black nav-link" href="#" id="mobile-user-options" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="text-primary-dark nav-link" href="#" id="mobile-account-menu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="text-center">
                 <div><i class="fas fa-user fa-lg"></i></div>
-                <p class="my-0">My Account</p>
+                <p class="my-0 small">Account</p>
             </div>
         </a>
-        <div class="dropdown-menu border-0" aria-labelledby="mobile-user-options">
+        <div class="dropdown-menu border-0 shadow-lg rounded-3" aria-labelledby="mobile-account-menu">
             {% if request.user.is_authenticated %}
-                {% if request.user.is_superuser %}
-                    <a href="#" class="dropdown-item">Product Management</a>
-                {% endif %}
-                <a href="#" class="dropdown-item">My Profile</a>
-                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                <a href="#" class="dropdown-item py-2"><i class="fas fa-user-circle me-2"></i>My Profile</a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'account_logout' %}" class="dropdown-item py-2"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
             {% else %}
-                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
-                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                <a href="{% url 'account_signup' %}" class="dropdown-item py-2"><i class="fas fa-user-plus me-2"></i>Register</a>
+                <a href="{% url 'account_login' %}" class="dropdown-item py-2"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
             {% endif %}
         </div>
     </li>
     <li class="list-inline-item">
-        <a class="{% if grand_total %}text-primary fw-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_cart' %}">
-            <div class="text-center">
+        <a class="{% if grand_total %}text-accent fw-bold{% else %}text-primary-dark{% endif %} nav-link" href="{% url 'view_cart' %}">
+            <div class="text-center position-relative">
                 <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                <p class="my-0">
+                <p class="my-0 small">
                     {% if grand_total %}
                         £{{ grand_total|floatformat:2 }}
                     {% else %}
                         £0.00
                     {% endif %}
                 </p>
+                {% if grand_total %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-accent">
+                        <span class="visually-hidden">items in cart</span>
+                    </span>
+                {% endif %}
             </div>
         </a>
     </li>
 </ul>
 
 <!-- Main Navigation Menu -->
-<div class="collapse navbar-collapse" id="main-nav">
+<div class="collapse navbar-collapse" id="main-navigation">
     <ul class="navbar-nav w-auto mx-auto">
         <li class="nav-item dropdown">
-            <a class="logo-font fw-bold nav-link text-black mr-5" href="#" id="all-products-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="brand-logo fw-bold nav-link text-primary-dark me-4" href="#" id="all-items-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 All Items
+                <i class="fas fa-chevron-down ms-1 small"></i>
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="all-products-link">
-                <a href="{% url 'products' %}" class="dropdown-item">Show Items</a>
+            <div class="dropdown-menu border-0 shadow-lg rounded-3" aria-labelledby="all-items-dropdown">
+                <a href="{% url 'products' %}" class="dropdown-item py-2">
+                    <i class="fas fa-utensils me-2 text-accent"></i>Show All Items
+                </a>
             </div>
         </li>
+        
         <li class="nav-item dropdown">
-            <a class="logo-font fw-bold nav-link text-black mr-5" href="#" id="clothing-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dessert
+            <a class="brand-logo fw-bold nav-link text-primary-dark me-4" href="#" id="desserts-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Desserts
+                <i class="fas fa-chevron-down ms-1 small"></i>
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="clothing-link">
-                <a href="{% url 'products' %}?category=Cakes" class="dropdown-item">Cakes</a>
-                <a href="{% url 'products' %}?category=Frozen%20Desserts" class="dropdown-item">Frozen Desserts</a>
-                <a href="{% url 'products' %}?category=Fried%20Desserts" class="dropdown-item">Fried Desserts</a>
-                <a href="{% url 'products' %}?category=Cakes,Frozen%20Desserts,Fried%20Desserts" class="dropdown-item">All desserts</a>
+            <div class="dropdown-menu border-0 shadow-lg rounded-3" aria-labelledby="desserts-dropdown">
+                <a href="{% url 'products' %}?category=Cakes" class="dropdown-item py-2">
+                    <i class="fas fa-birthday-cake me-2 text-accent"></i>Cakes
+                </a>
+                <a href="{% url 'products' %}?category=Frozen%20Desserts" class="dropdown-item py-2">
+                    <i class="fas fa-ice-cream me-2 text-accent"></i>Frozen Desserts
+                </a>
+                <a href="{% url 'products' %}?category=Fried%20Desserts" class="dropdown-item py-2">
+                    <i class="fas fa-cookie-bite me-2 text-accent"></i>Fried Desserts
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'products' %}?category=Cakes,Frozen%20Desserts,Fried%20Desserts" class="dropdown-item py-2 fw-bold">
+                    <i class="fas fa-heart me-2 text-accent"></i>All Desserts
+                </a>
             </div>
         </li>
+        
         <li class="nav-item dropdown">
-            <a class="logo-font fw-bold nav-link text-black mr-5" href="#" id="homeware-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Main Dish
+            <a class="brand-logo fw-bold nav-link text-primary-dark me-4" href="#" id="mains-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Main Dishes
+                <i class="fas fa-chevron-down ms-1 small"></i>
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="homeware-link">
-                <a href="{% url 'products' %}?category=Lamb" class="dropdown-item">Lamb</a>
-                <a href="{% url 'products' %}?category=Chicken" class="dropdown-item">Chicken</a>
-                <a href="{% url 'products' %}?category=Vegetarian" class="dropdown-item">Vegetarian</a>
-                <a href="{% url 'products' %}?category=Lamb,Chicken,Vegetarian" class="dropdown-item">All Items</a>
+            <div class="dropdown-menu border-0 shadow-lg rounded-3" aria-labelledby="mains-dropdown">
+                <a href="{% url 'products' %}?category=Lamb" class="dropdown-item py-2">
+                    <i class="fas fa-drumstick-bite me-2 text-accent"></i>Lamb
+                </a>
+                <a href="{% url 'products' %}?category=Chicken" class="dropdown-item py-2">
+                    <i class="fas fa-chicken me-2 text-accent"></i>Chicken
+                </a>
+                <a href="{% url 'products' %}?category=Vegetarian" class="dropdown-item py-2">
+                    <i class="fas fa-leaf me-2 text-accent"></i>Vegetarian
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'products' %}?category=Lamb,Chicken,Vegetarian" class="dropdown-item py-2 fw-bold">
+                    <i class="fas fa-fire me-2 text-accent"></i>All Main Dishes
+                </a>
             </div>
         </li>
+        
         <li class="nav-item dropdown">
-            <a class="logo-font fw-bold nav-link text-black" href="#" id="specials-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="brand-logo fw-bold nav-link text-primary-dark" href="#" id="offers-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Special Offers
+                <i class="fas fa-chevron-down ms-1 small"></i>
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="specials-link">
-                <a href="{% url 'products' %}?category=Platters%20for%202%20people" class="dropdown-item">Platters for 2 people</a>
-                <a href="{% url 'products' %}?category=Platters%20for%204%20people" class="dropdown-item">Platters for 4 people</a>
-                <a href="{% url 'products' %}?category=Platters%20for%206%20people" class="dropdown-item">Platters for 6 people</a>
+            <div class="dropdown-menu border-0 shadow-lg rounded-3" aria-labelledby="offers-dropdown">
+                <a href="{% url 'products' %}?category=Platters%20for%202%20people" class="dropdown-item py-2">
+                    <i class="fas fa-user-friends me-2 text-accent"></i>Platters for 2 People
+                </a>
+                <a href="{% url 'products' %}?category=Platters%20for%204%20people" class="dropdown-item py-2">
+                    <i class="fas fa-users me-2 text-accent"></i>Platters for 4 People
+                </a>
+                <a href="{% url 'products' %}?category=Platters%20for%206%20people" class="dropdown-item py-2">
+                    <i class="fas fa-user-plus me-2 text-accent"></i>Platters for 6 People
+                </a>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="brand-logo fw-bold nav-link text-primary-dark me-4" href="#" id="all-items-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Contact us for any Issues
+                <i class="fas fa-chevron-down ms-1 small"></i>
+            </a>
+            <div class="dropdown-menu border-0 shadow-lg rounded-3" aria-labelledby="all-items-dropdown">
+                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
             </div>
         </li>
     </ul>

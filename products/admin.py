@@ -4,6 +4,114 @@ from django.db import models
 from django.forms import TextInput, Textarea
 from .models import Category, Product, ProductImage, ProductReview
 
+from .models import Contact
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    """Admin configuration for Contact model"""
+    list_display = (
+        'name', 'email', 'inquiry_type_display', 'subject_truncated', 
+        'status', 'is_complaint', 'days_old', 'created_at'
+    )
+    list_filter = ('inquiry_type', 'status', 'created_at')
+    search_fields = ('name', 'email', 'subject', 'message', 'order_reference')
+    list_editable = ('status',)
+    ordering = ('-created_at',)
+    date_hierarchy = 'created_at'
+    
+    fieldsets = (
+        ('Contact Information', {
+            'fields': ('name', 'email', 'phone', 'order_reference')
+        }),
+        ('Inquiry Details', {
+            'fields': ('inquiry_type', 'subject', 'message')
+        }),
+        ('Status & Management', {
+            'fields': ('status', 'resolved_by', 'admin_notes')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    readonly_fields = ('created_at', 'updated_at')
+    
+    def inquiry_type_display(self, obj):
+        """Display inquiry type with color coding"""
+        colors = {
+            'food_quality': '#dc3545',  
+            'delivery': '#fd7e14',      
+            'service': '#dc3545',       
+            'billing': '#dc3545',       
+            'suggestion': '#28a745',    
+            'compliment': '#17a2b8',    
+            'other': '#6c757d',         
+        }
+        color = colors.get(obj.inquiry_type, '#6c757d')
+        return format_html(
+            '<span style="color: {}; font-weight: bold;">{}</span>',
+            color,
+            obj.get_inquiry_type_display()
+        )
+    inquiry_type_display.short_description = 'Type'
+    inquiry_type_display.admin_order_field = 'inquiry_type'
+    
+    def subject_truncated(self, obj):
+        """Display truncated subject"""
+        if len(obj.subject) > 50:
+            return f"{obj.subject[:50]}..."
+        return obj.subject
+    subject_truncated.short_description = 'Subject'
+    subject_truncated.admin_order_field = 'subject'
+    
+    def is_complaint(self, obj):
+        """Display if this is a complaint"""
+        if obj.is_complaint:
+            return format_html('<span style="color: #dc3545;"> Complaint</span>')
+        return ' Inquiry'
+    is_complaint.short_description = 'Type'
+    
+    def days_old(self, obj):
+        """Display days since submission"""
+        days = obj.days_since_submitted
+        if days == 0:
+            return 'Today'
+        elif days == 1:
+            return '1 day ago'
+        else:
+            color = '#dc3545' if days > 3 else '#6c757d'  # Red if older than 3 days
+            return format_html(
+                '<span style="color: {};">{} days ago</span>',
+                color,
+                days
+            )
+    days_old.short_description = 'Age'
+    
+    actions = ['mark_as_resolved', 'mark_as_in_progress', 'mark_as_closed']
+    
+    def mark_as_resolved(self, request, queryset):
+        """Mark selected inquiries as resolved"""
+        updated = queryset.update(status='resolved', resolved_by=request.user.username)
+        self.message_user(request, f'{updated} inquiries marked as resolved.')
+    mark_as_resolved.short_description = 'Mark selected as resolved'
+    
+    def mark_as_in_progress(self, request, queryset):
+        """Mark selected inquiries as in progress"""
+        updated = queryset.update(status='in_progress')
+        self.message_user(request, f'{updated} inquiries marked as in progress.')
+    mark_as_in_progress.short_description = 'Mark selected as in progress'
+    
+    def mark_as_closed(self, request, queryset):
+        """Mark selected inquiries as closed"""
+        updated = queryset.update(status='closed', resolved_by=request.user.username)
+        self.message_user(request, f'{updated} inquiries closed.')
+    mark_as_closed.short_description = 'Mark selected as closed'
+    
+    def get_queryset(self, request):
+        """Add any query optimizations"""
+        return super().get_queryset(request)
+
 class ProductImageInline(admin.TabularInline):
     """Inline admin for product images"""
     model = ProductImage

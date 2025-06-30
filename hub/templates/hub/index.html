@@ -1,34 +1,43 @@
 {% extends "base.html" %}
-
 {% load static %}
-
 {% load i18n %}
 
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
         <div class="col">
-            </div>
-            </div>
-            </div>
-    
-{% endblock %}
-
-{% block content %}
-<div class="container h-100">
-    <div class="row h-100">
-        <div class="col-7 col-md-6 my-auto">
-<h1 class="display-4 logo-font text-black">
-The tasty foods are here.
-</h1>
-        </div>
-        <div class="my-5">
-        <h4>
-            <a href="{% url 'products' %}" class="shop-now-button btn btn-success btn-lg rounded-0 text-uppercase py-3">Order Now</a>
-        </h4>
         </div>
     </div>
 </div>
-
 {% endblock %}
 
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="hero-content text-center">
+                    <div class="hero-title-wrapper mb-4">
+                        <h1 class="hero-title display-4 fw-bold text-white mb-4">
+                            Welcome to Tasty Hub
+                        </h1>
+                        <p class="hero-subtitle lead text-white mb-5">
+                            Discover delicious meals crafted with passion
+                        </p>
+                    </div>
+                    <div class="hero-button-wrapper">
+                        <a href="{% url 'products' %}" 
+                           id="menu-cta-button" 
+                           class="menu-cta-btn btn btn-lg text-uppercase fw-bold px-5 py-3"
+                           role="button"
+                           aria-label="View our food menu">
+                            <i class="fas fa-utensils me-2"></i>
+                            View Our Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

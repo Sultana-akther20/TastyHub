@@ -192,7 +192,7 @@ class ProductReview(models.Model):
         ordering = ['-created_at']
         verbose_name = "Customer Review"
         verbose_name_plural = "Customer Reviews"
-        unique_together = ['product', 'customer_email']  # One review per email per product
+        unique_together = ['product', 'customer_email'] 
     
     def __str__(self):
         return f"{self.product.name} - {self.rating} stars by {self.customer_name}"
@@ -201,3 +201,64 @@ class ProductReview(models.Model):
     def star_display(self):
         """Return star rating as symbols"""
         return '★' * self.rating + '☆' * (5 - self.rating)
+    
+
+# Add this to your models.py file
+
+class Contact(models.Model):
+    """
+    Model for contact form submissions and complaints
+    """
+    
+    INQUIRY_TYPES = [
+        ('food_quality', 'Food Quality Issue'),
+        ('delivery', 'Delivery Problem'),
+        ('service', 'Service Complaint'),
+        ('billing', 'Billing Issue'),
+        ('suggestion', 'Suggestion'),
+        ('compliment', 'Compliment'),
+        ('other', 'Other'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('resolved', 'Resolved'),
+        ('closed', 'Closed'),
+    ]
+    
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    inquiry_type = models.CharField(max_length=20, choices=INQUIRY_TYPES)
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    order_reference = models.CharField(max_length=50, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    
+    # Admin fields
+    admin_notes = models.TextField(blank=True, null=True, help_text="Internal notes for staff")
+    resolved_by = models.CharField(max_length=100, blank=True, null=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Contact Submission"
+        verbose_name_plural = "Contact Submissions"
+    
+    def __str__(self):
+        return f"{self.name} - {self.subject} ({self.get_inquiry_type_display()})"
+    
+    @property
+    def is_complaint(self):
+        """Check if this is a complaint type inquiry"""
+        complaint_types = ['food_quality', 'delivery', 'service', 'billing']
+        return self.inquiry_type in complaint_types
+    
+    @property
+    def days_since_submitted(self):
+        """Calculate days since submission"""
+        from django.utils import timezone
+        return (timezone.now() - self.created_at).days
