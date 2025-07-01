@@ -154,7 +154,7 @@
       "is_featured": true,
       "preparation_time": 25,
       "ingredients": "Lamb chops, rosemary, garlic, olive oil, herbs", 
-      "image": "lamb-chops-2.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396628/lamb-chops-2_ms5upm.jpg"
     }
   },
   {
@@ -169,7 +169,7 @@
       "is_featured": true,
       "preparation_time": 35,
       "ingredients": "Lamb, saffron, spices, onions, yogurt",
-      "image": "lamb-kabab-1.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396628/lamb-kabab-1_u6y24y.jpg"
     }
   },
   {
@@ -184,7 +184,7 @@
       "is_featured": true,
       "preparation_time": 15,
       "ingredients": "Chicken wings, celery, ranch dressing", 
-      "image": "chicken-dish-1.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751399071/chicken-dish-1_lfxm4j.jpg"
     }
   },
   {
@@ -199,7 +199,7 @@
       "is_featured": true,
       "preparation_time": 20,
       "ingredients": "Whole chicken, herbs, spices, olive oil",
-      "image": "chicken-roast-3.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396589/chicken-roast-3_awzdjs.jpg"
     }
   },
   {
@@ -214,7 +214,7 @@
       "is_featured": true,
       "preparation_time": 15,
       "ingredients": "Chicken breast, alfredo sauce, parmesan cheese",
-      "image": "chicken-dish-4.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396603/chicken-dish-4_vvmlcx.jpg"
     }
   },
   {
@@ -229,7 +229,7 @@
       "is_featured": false,
       "preparation_time": 25,
       "ingredients": "Chicken, tomatoes, cream, spices",
-      "image": "chicken-kabab-2.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396585/chicken-kabab-2_pecwwr.jpg"
     }
   },
   {
@@ -244,7 +244,7 @@
       "is_featured": false,
       "preparation_time": 20,
       "ingredients": "Mixed vegetables, curry spices, coconut milk, basmati rice", 
-      "image": "vegetable-food-1.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751398741/vegetable-food-1_klvq5e.jpg"
     }
   },
   {
@@ -259,7 +259,7 @@
       "is_featured": false,
       "preparation_time": 8,
       "ingredients": "Fresh mozzarella, tomatoes, basil, balsamic glaze",
-      "image": "vegetable-food-3.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751398752/vegetable-food-3_adil0i.jpg"
     }
   },
   {
@@ -274,7 +274,7 @@
       "is_featured": false,
       "preparation_time": 5,
       "ingredients": "Aubergines, tomatoes, caesar dressing",
-      "image": "vegetable-food-2.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751398753/vegetable-food-2_u72b29.jpg"
     }
   },
   {
@@ -289,7 +289,7 @@
       "is_featured": true,
       "preparation_time": 8,
       "ingredients": "Chocolate, flour, eggs, butter, vanilla ice cream",
-      "image": "cake-dessert-1.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751398579/cake-dessert-1_wlh8xs.jpg"
     }
   },
   {
@@ -304,7 +304,7 @@
       "is_featured": false,
       "preparation_time": 5,
       "ingredients": "Vanilla ice cream, coating, honey, whipped cream",
-      "image": "frozen-icecream-2.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396600/frozen-icecream-2_mgjlph.jpg"
     }
   },
   {
@@ -319,7 +319,7 @@
       "is_featured": false,
       "preparation_time": 3,
       "ingredients": "Strawberry ice cream, fresh berries",
-      "image": "frozen-dessert-1.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396596/frpzen-dessert-1_adiatt.jpg"
     }
   },
   {
@@ -334,7 +334,7 @@
       "is_featured": true,
       "preparation_time": 5,
       "ingredients": "Pistachio gelato, chocolate gelato, strawberry gelato",
-      "image": "frozen-dessert-3.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396788/frozen-dessert-3_l8phai.jpg"
     }
   },
   {
@@ -349,7 +349,7 @@
       "is_featured": true,
       "preparation_time": 12,
       "ingredients": "Flour, cinnamon, sugar, chocolate sauce",
-      "image": "fried-dessert-chocolate-donut-2.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396796/fried-dessert-chocolate-donut-2_y7mcbp.jpg"
     }
   },
   {
@@ -364,7 +364,7 @@
       "is_featured": false,
       "preparation_time": 10,
       "ingredients": "Vanilla flavoured, flower, butter and egg",
-      "image": "fried-dessert-plain-donut-1.jpg"
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396803/fried-dessert-plain-donut-1_a7vt6z.jpg"
     }
   },
   {
@@ -378,7 +378,8 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 30,
-      "ingredients": "Grilled chicken, lamb chops, basmati rice, vegetables, chocolate cake"
+      "ingredients": "Grilled chicken, lamb chops, basmati rice, vegetables, chocolate cake",
+      "image":"https://res.cloudinary.com/dvc84jm03/image/upload/v1751396503/platter_of_2_tlzfd6.jpg"
     }
   },
   {
@@ -392,7 +393,8 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 40,
-      "ingredients": "Mixed grill meats, rice, naan bread, vegetables, salad, desserts"
+      "ingredients": "Mixed grill meats, rice, naan bread, vegetables, salad, desserts",
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396507/platters_of_4_od3vrr.jpg"
     }
   },
   {
@@ -406,7 +408,8 @@
       "is_available": true,
       "is_featured": true,
       "preparation_time": 50,
-      "ingredients": "Assorted meats, rice dishes, breads, salads, vegetables, dessert selection"
+      "ingredients": "Assorted meats, rice dishes, breads, salads, vegetables, dessert selection",
+      "image": "https://res.cloudinary.com/dvc84jm03/image/upload/v1751396491/platters_of_6_iv1ait.jpg"
     }
   }
 ]
