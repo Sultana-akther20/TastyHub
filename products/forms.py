@@ -82,7 +82,7 @@ class ContactForm(forms.Form):
     )
     
     phone = forms.CharField(
-        max_length=20,
+        max_length=30,
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -122,7 +122,7 @@ class ContactForm(forms.Form):
     
     # Order reference for complaints
     order_reference = forms.CharField(
-        max_length=50,
+        max_length=200,
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',

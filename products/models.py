@@ -7,7 +7,7 @@ class Category(models.Model):
     """
     Category model for organizing products hierarchically
     """
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(blank=True, null=True)
     parent = models.ForeignKey(
         'self', 
@@ -18,7 +18,7 @@ class Category(models.Model):
     )
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0, help_text="Display order")
-    slug = models.SlugField(max_length=120, unique=True, blank=True, null=True)
+    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
     
     
     class Meta:
@@ -96,6 +96,13 @@ class Product(models.Model):
         help_text="Dish image"
     )
     #image_url = models.URLField(max_length=1000, null=True, blank=True)
+    image = models.URLField(
+    max_length=1000,  # large enough for Cloudinary URLs
+    null=True, 
+    blank=True,
+    help_text="Dish image URL"
+)
+
     
     class Meta:
         verbose_name = "Menu Item"
@@ -176,7 +183,7 @@ class ProductReview(models.Model):
         on_delete=models.CASCADE,
         related_name='reviews'
     )
-    customer_name = models.CharField(max_length=100)
+    customer_name = models.CharField(max_length=200)
     customer_email = models.EmailField()
     rating = models.IntegerField(
         choices=RATING_CHOICES,
@@ -224,7 +231,7 @@ class Contact(models.Model):
         ('closed', 'Closed'),
     ]
     
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     email = models.EmailField()
     phone = models.CharField(max_length=20, blank=True, null=True)
     inquiry_type = models.CharField(max_length=20, choices=INQUIRY_TYPES)
@@ -235,7 +242,7 @@ class Contact(models.Model):
     
     # Admin fields
     admin_notes = models.TextField(blank=True, null=True, help_text="Internal notes for staff")
-    resolved_by = models.CharField(max_length=100, blank=True, null=True)
+    resolved_by = models.CharField(max_length=200, blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -166,12 +166,6 @@ class CategoryAdmin(admin.ModelAdmin):
         """Optimize queries"""
         return super().get_queryset(request).select_related('parent').prefetch_related('products')
 
-
-
-
-
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     """Admin configuration for Product model"""
