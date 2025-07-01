@@ -18,7 +18,7 @@ def all_products(request):
         if 'category' in request.GET:
             category_names = request.GET['category'].split(',')
             category_names = [name.strip().replace('%20', ' ') for name in category_names]
-            products = products.filter(categorynamein=category_names)
+            products = products.filter(category__name__in=category_names)
             current_categories = Category.objects.filter(name__in=category_names)
 
         if 'q' in request.GET:

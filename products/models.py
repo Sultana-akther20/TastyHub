@@ -120,7 +120,7 @@ class Product(models.Model):
     @property
     def formatted_price(self):
         """Return formatted price with currency symbol"""
-        return f"${self.price}"
+        return f"£{self.price}"
     
     @property
     def preparation_time_display(self):
@@ -201,9 +201,6 @@ class ProductReview(models.Model):
     def star_display(self):
         """Return star rating as symbols"""
         return '★' * self.rating + '☆' * (5 - self.rating)
-    
-
-# Add this to your models.py file
 
 class Contact(models.Model):
     """
