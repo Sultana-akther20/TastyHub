@@ -1,19 +1,19 @@
 <!-- Mobile Navigation Items (only visible on mobile/tablet, hidden on desktop) -->
-<ul class="list-inline list-unstyled text-center text-lg-right my-0 mobile-nav-only d-lg-none">
+<ul class="list-inline list-unstyled text-center text-lg-right my-0 d-lg-none">
     <li class="list-inline-item">
-        <a class="text-primary-dark nav-link" href="#" id="mobile-search-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="text-black nav-link" href="#" id="mobile-search" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="text-center">
                 <div><i class="fas fa-search fa-lg"></i></div>
-                <p class="my-0 small">Search</p>
+                <p class="my-0">Search</p>
             </div>
         </a>
-        <div class="dropdown-menu border-0 w-100 p-3 rounded-3 my-0 shadow-lg" aria-labelledby="mobile-search-toggle">
+        <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
             <form class="form" method="GET" action="{% url 'products' %}">
                 <div class="input-group w-100">
-                    <input class="form-control border border-primary-dark rounded-start-3" type="text" name="q" placeholder="Search delicious meals...">
+                    <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site">
                     <div class="input-group-append">
-                        <button class="form-control btn btn-primary-dark border border-primary-dark rounded-end-3" type="submit">
-                            <span class="btn-icon">
+                        <button class="form-control form-control btn btn-black border border-black rounded-0" type="submit">
+                            <span class="icon">
                                 <i class="fas fa-search"></i>
                             </span>
                         </button>
@@ -23,44 +23,37 @@
         </div>
     </li>
     <li class="list-inline-item dropdown">
-        <a class="text-primary-dark nav-link" href="#" id="mobile-account-menu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="text-black nav-link" href="#" id="mobile-user-options" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="text-center">
                 <div><i class="fas fa-user fa-lg"></i></div>
-                <p class="my-0 small">Account</p>
+                <p class="my-0">My Account</p>
             </div>
         </a>
-        <div class="dropdown-menu border-0 shadow-lg rounded-3" aria-labelledby="mobile-account-menu">
+        <div class="dropdown-menu border-0" aria-labelledby="mobile-user-options">
             {% if request.user.is_authenticated %}
-                <a href="#" class="dropdown-item py-2"><i class="fas fa-user-circle me-2"></i>My Profile</a>
-                <div class="dropdown-divider"></div>
-                <a href="{% url 'account_logout' %}" class="dropdown-item py-2"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                <a href="#" class="dropdown-item">My Profile</a>
+                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
             {% else %}
-                <a href="{% url 'account_signup' %}" class="dropdown-item py-2"><i class="fas fa-user-plus me-2"></i>Register</a>
-                <a href="{% url 'account_login' %}" class="dropdown-item py-2"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
+                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
             {% endif %}
         </div>
     </li>
     <li class="list-inline-item">
-        <a class="{% if grand_total %}text-accent fw-bold{% else %}text-primary-dark{% endif %} nav-link" href="{% url 'view_cart' %}">
-            <div class="text-center position-relative">
+        <a class="{% if grand_total %}text-primary fw-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_cart' %}">
+            <div class="text-center">
                 <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                <p class="my-0 small">
+                <p class="my-0">
                     {% if grand_total %}
                         £{{ grand_total|floatformat:2 }}
                     {% else %}
                         £0.00
                     {% endif %}
                 </p>
-                {% if grand_total %}
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-accent">
-                        <span class="visually-hidden">items in cart</span>
-                    </span>
-                {% endif %}
             </div>
         </a>
     </li>
 </ul>
-
 <!-- Main Navigation Menu -->
 <div class="collapse navbar-collapse" id="main-navigation">
     <ul class="navbar-nav w-auto mx-auto">
@@ -75,7 +68,7 @@
                 </a>
             </div>
         </li>
-        
+
         <li class="nav-item dropdown">
             <a class="brand-logo fw-bold nav-link text-primary-dark me-4" href="#" id="desserts-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Desserts
@@ -97,7 +90,7 @@
                 </a>
             </div>
         </li>
-        
+
         <li class="nav-item dropdown">
             <a class="brand-logo fw-bold nav-link text-primary-dark me-4" href="#" id="mains-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Main Dishes
@@ -119,7 +112,7 @@
                 </a>
             </div>
         </li>
-        
+
         <li class="nav-item dropdown">
             <a class="brand-logo fw-bold nav-link text-primary-dark" href="#" id="offers-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Special Offers
@@ -137,8 +130,9 @@
                 </a>
             </div>
         </li>
-
-        <li class="nav-item dropdown">
+            
+       
+         <li class="nav-item dropdown">
             <a class="brand-logo fw-bold nav-link text-primary-dark me-4" href="#" id="all-items-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Contact us for any Issues
                 <i class="fas fa-chevron-down ms-1 small"></i>
@@ -148,4 +142,4 @@
             </div>
         </li>
     </ul>
-</div>
+</div> 
