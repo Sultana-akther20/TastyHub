@@ -88,13 +88,7 @@ class Product(models.Model):
     # SEO and URL
     slug = models.SlugField(max_length=220, unique=True, blank=True, null=True)
     
-    # Image field
-    image = models.ImageField(
-        upload_to='images/', 
-        null=True, 
-        blank=True,
-        help_text="Dish image"
-    )
+    
     #image_url = models.URLField(max_length=1000, null=True, blank=True)
     image = models.URLField(
     max_length=1000,  # large enough for Cloudinary URLs

@@ -17,7 +17,7 @@
             <div class="product-image-container my-5">
                 {% if product.image %}
                 <a href="{{ product.image.url }}" target="_blank">
-                    <img class="img-fluid rounded shadow" src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 400px; object-fit: cover;">
+                    <img class="img-fluid rounded shadow" src="{{ product.image }}" alt="{{ product.name }}" style="width: 100%; height: 400px; object-fit: cover;">
                 </a>
                 {% else %}
                 <a href="">
