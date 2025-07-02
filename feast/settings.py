@@ -179,3 +179,4 @@ STANDARD_DELIVERY = Decimal('10.00')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
