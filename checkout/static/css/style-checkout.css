@@ -29,10 +29,6 @@
     background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
-.StripeElement--empty {
-    /* Style for when the element is empty */
-}
-
 /* Loading spinner for form submission */
 .spinner-border-sm {
     width: 1rem;
@@ -105,13 +101,6 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
-}
-
-@media (max-width: 992px) {
-    .checkout-content-wrapper {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
 }
 
 .order-summary-card, .checkout-form-card {
@@ -529,5 +518,12 @@ fieldset {
     .btn-modern {
         width: 100%;
         justify-content: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .checkout-content-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 }

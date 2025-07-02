@@ -40,7 +40,7 @@
                         <div class="item-image-container">
                             <a href="{% url 'details' item.product.id %}">
                                 {% if item.product.image %}
-                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="item-image-modern">
+                                <img src="{{ item.product.image }}" alt="{{ item.product.name }}" class="item-image-modern">
                                 {% else %}
                                 <img src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}" class="item-image-modern">
                                 {% endif %}
