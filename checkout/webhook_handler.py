@@ -22,10 +22,10 @@ class StripeWH_Handler:
         try:
             cust_email = order.email
             subject = render_to_string(
-                'checkout/confirmation_emails/email_confirmation_subject.txt',
+                'checkout/confirmation_emails/confirmation_email_subject.txt',
                 {'order': order})
             body = render_to_string(
-                'checkout/confirmation_emails/email_confirmation_body.txt',
+                'checkout/confirmation_emails/confirmation_email_body.txt',
                 {'order': order, 'contact_email': settings.DEFAULT_FROM_EMAIL})
             
             send_mail(
@@ -36,22 +36,19 @@ class StripeWH_Handler:
             )
         except Exception as e:
             logger.error(f"Failed to send confirmation email: {e}")
-
+    
     def handle_event(self, event):
         """Handle a generic/unknown/unexpected webhook event"""
         return HttpResponse(
             content=f'Unhandled webhook received: {event["type"]}',
             status=200)
-
+    
     def handle_payment_intent_succeeded(self, event):
         """Handle the payment_intent.succeeded webhook from Stripe"""
         intent = event['data']['object']
         pid = intent['id']
         bag = intent['metadata'].get('cart', '{}')
         save_info = intent['metadata'].get('save_info', False)
-        
-        # Get amount directly from payment intent
-        grand_total = round(intent['amount'] / 100, 2)
         
         # Get billing and shipping details
         billing_details = {
@@ -142,7 +139,6 @@ class StripeWH_Handler:
                     street_address1__iexact=lookup_line1,
                     street_address2__iexact=lookup_line2,
                     county__iexact=lookup_state,
-                    grand_total=grand_total,
                     original_cart=bag,
                     stripe_pid=pid,
                 )
@@ -208,6 +204,10 @@ class StripeWH_Handler:
                         return HttpResponse(
                             content=f'Webhook received: {event["type"]} | ERROR: Product not found',
                             status=500)
+                
+                # IMPORTANT: After creating all order items, update the order
+                # This will recalculate delivery_cost, order_total, and grand_total
+                order.update_total()
                             
             except Exception as e:
                 logger.error(f"Error creating order in webhook: {e}")
@@ -221,7 +221,7 @@ class StripeWH_Handler:
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)
-
+    
     def handle_payment_intent_payment_failed(self, event):
         """Handle the payment_intent.payment_failed webhook from Stripe"""
         return HttpResponse(
