@@ -27,8 +27,6 @@ LANGUAGE_CODE = 'en-gb'
 USE_I18N = True
 USE_L10N = True
 
-# Define your delivery costs
-LONDON_DELIVERY_COST = 5.00 
 
 # Environment variables
 SECRET_KEY = os.getenv('SECRET_KEY')

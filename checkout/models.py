@@ -4,11 +4,12 @@ from django.conf import settings
 from django.db.models import Sum
 from products.models import Product
 
+
 class Order(models.Model):
     DELIVERY_AREAS = [
         ('london', 'London'),
     ]
-    
+
     delivery_area = models.CharField(
         max_length=50,
         choices=DELIVERY_AREAS,
@@ -31,7 +32,7 @@ class Order(models.Model):
     stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')
 
     def _generate_order_number(self):
-        """Generate a random unique order number using UUID."""
+        """Generate a random, unique order number using UUID."""
         return uuid.uuid4().hex.upper()
 
     def save(self, *args, **kwargs):
@@ -41,26 +42,16 @@ class Order(models.Model):
         super().save(*args, **kwargs)
 
     def update_total(self):
-        """Update grand total each time an item is added to the order."""
-        # Calculate order total from line items using the correct related_name 'items'
+        """Update grand total each time an item is added or updated."""
         self.order_total = self.items.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
-        
-        # Calculate delivery cost based on delivery area (not free delivery threshold)
-        if self.delivery_area == 'london':
-            # Use your actual London delivery cost here
-            self.delivery_cost = getattr(settings, 'LONDON_DELIVERY_COST', 5.00)
+        if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
+            self.delivery_cost = settings.STANDARD_DELIVERY
         else:
-            # Default delivery cost for other areas
-            self.delivery_cost = 0.00
-        
-        # Calculate grand total
+            self.delivery_cost = 0
         self.grand_total = self.order_total + self.delivery_cost
-        
-        # Save the order
         self.save()
 
     def __str__(self):
-        """Return a string representation of the order."""
         return self.order_number
 
 
@@ -71,12 +62,10 @@ class OrderItem(models.Model):
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
 
     def save(self, *args, **kwargs):
-        """Override the save method to set the lineitem_total and update the order total."""
+        """Override save method to calculate line item total and update the order."""
         self.lineitem_total = self.product.price * self.quantity
         super().save(*args, **kwargs)
-        # Update the order total after saving this item
         self.order.update_total()
 
     def __str__(self):
-        """Return a string representation of the order item."""
         return f'Order {self.order.order_number} Item {self.id}'
