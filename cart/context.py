@@ -26,7 +26,7 @@ def cart_contents(request):
             continue
     
     # Convert settings values to Decimal for consistent calculation
-    free_delivery_threshold = Decimal(str(getattr(settings, 'FREE_DELIVERY_THRESHOLD', 50)))
+    free_delivery_threshold = Decimal(str(getattr(settings, 'FREE_DELIVERY_THRESHOLD', 30)))
     # Fixed: Use STANDARD_DELIVERY as a fixed amount, not a percentage
     standard_delivery_charge = Decimal(str(getattr(settings, 'STANDARD_DELIVERY', 5)))
     
