@@ -493,6 +493,7 @@ select.stripe-style-input:focus,
     position: relative;
 }
 
+
 /* Fix the fieldset overflow that's cutting off the dropdown */
 fieldset {
     background: rgba(255, 255, 255, 0.9) !important;
@@ -520,6 +521,14 @@ fieldset {
     position: relative;
     z-index: 1;
 }
+#div_id_delivery_area input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  white-space: normal;
+}
+
 
 /* Ensure parent containers don't clip the dropdown */
 .checkout-form-card,
