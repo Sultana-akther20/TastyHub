@@ -1,1 +1,104 @@
-{% extends "allauth/layouts/entrance.html" %}
+{% extends "base.html" %}
+{% block extra_css %}
+<style>
+body .container {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-radius: 25px !important;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5) !important;
+    border: 3px solid rgba(255, 255, 255, 0.3) !important;
+    margin-top: 100px !important;
+    padding: 40px !important;
+    max-width: 500px !important;
+    position: relative !important;
+    z-index: 999 !important;
+}
+
+/* Alternative - if container doesn't work, target the row */
+body .container .row {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.6) !important;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    padding: 30px !important;
+    margin: 50px auto !important;
+}
+
+/* Target any column containing forms */
+.col-md-6, .col-lg-5, .justify-content-center > div {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    padding: 30px !important;
+    margin-top: 50px !important;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover,
+.btn:hover {
+    background: linear-gradient(135deg, #333333 0%, #000000 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Links */
+a {
+    color: #000000 !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+a:hover {
+    color: #333333 !important;
+    text-decoration: underline !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    body .container,
+    body .container .row,
+    .col-md-6, .col-lg-5 {
+        margin: 20px 10px !important;
+        padding: 20px !important;
+        max-width: calc(100% - 20px) !important;
+    }
+    
+    form {
+        margin: 10px 5px !important;
+        padding: 20px !important;
+    }
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(20px)) {
+    body .container,
+    body .container .row,
+    .col-md-6, .col-lg-5,
+    form {
+        background: rgba(255, 255, 255, 1) !important;
+    }
+} 
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0 mt-5">
+                <div class="card-header bg-black text-white text-center">
+                    <h3 class="logo-font mb-0">TastyHub</h3>
+                </div>
+                <div class="card-body p-4">
+                    {% block inner_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -21,12 +21,15 @@ $(document).ready(function() {
     var stripe = Stripe(stripePublicKey);
     var elements = stripe.elements();
     
+    // Improved responsive styling for the card element
     var style = {
         base: {
-            color: '#000',
+            color: '#32325d',
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: 'antialiased',
             fontSize: '16px',
+            lineHeight: '24px',
+            letterSpacing: '0.025em',
             '::placeholder': {
                 color: '#aab7c4'
             }
@@ -34,10 +37,26 @@ $(document).ready(function() {
         invalid: {
             color: '#dc3545',
             iconColor: '#dc3545'
+        },
+        complete: {
+            color: '#28a745',
+            iconColor: '#28a745'
         }
     };
     
-    var card = elements.create('card', {style: style});
+    // Create card element with responsive options
+    var cardOptions = {
+        style: style,
+        hidePostalCode: true, // Hide postal code since you have it in the form
+        iconStyle: 'solid',
+        classes: {
+            focus: 'StripeElement--focus',
+            empty: 'StripeElement--empty',
+            invalid: 'StripeElement--invalid',
+        }
+    };
+    
+    var card = elements.create('card', cardOptions);
     card.mount('#card-payment');
     
     // Handle real-time validation errors from the card Element
@@ -45,8 +64,10 @@ $(document).ready(function() {
         var displayError = document.getElementById('card-errors');
         if (event.error) {
             displayError.textContent = event.error.message;
+            displayError.style.display = 'block';
         } else {
             displayError.textContent = '';
+            displayError.style.display = 'none';
         }
     });
     
@@ -217,6 +238,7 @@ $(document).ready(function() {
             <span>${message}</span>
         `;
         $(errorDiv).html(html);
+        errorDiv.style.display = 'block';
     }
     
     // Helper function to reset the form
