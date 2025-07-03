@@ -15,6 +15,21 @@ from decimal import Decimal
 # Load environment variables from .env file
 load_dotenv()
 
+
+# Set timezone 
+TIME_ZONE = 'Europe/London'
+
+# Enable timezone support
+USE_TZ = True
+
+#Set language and internationalization
+LANGUAGE_CODE = 'en-gb'
+USE_I18N = True
+USE_L10N = True
+
+# Define your delivery costs
+LONDON_DELIVERY_COST = 5.00 
+
 # Environment variables
 SECRET_KEY = os.getenv('SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')

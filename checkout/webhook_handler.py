@@ -2,12 +2,15 @@ from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.utils import timezone
 from .models import Order, OrderItem
 from products.models import Product
 import json
 import time
 import logging
 import stripe
+from datetime import datetime
+import pytz
 
 logger = logging.getLogger(__name__)
 
@@ -149,6 +152,18 @@ class StripeWH_Handler:
                 time.sleep(1)
         
         if order_exists:
+            # Update totals for existing orders
+            order.update_total()
+            
+            # Update order timestamp to current time (in your timezone)
+            if hasattr(settings, 'TIME_ZONE'):
+                local_tz = pytz.timezone(settings.TIME_ZONE)
+                order.date = timezone.now().astimezone(local_tz)
+            else:
+                order.date = timezone.now()
+            
+            order.save()
+            
             self._send_confirmation_email(order)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
@@ -174,6 +189,11 @@ class StripeWH_Handler:
                     'stripe_pid': pid,
                 }
                 
+                # Set the correct timestamp when creating the order
+                if hasattr(settings, 'TIME_ZONE'):
+                    local_tz = pytz.timezone(settings.TIME_ZONE)
+                    order_data['date'] = timezone.now().astimezone(local_tz)
+                
                 order = Order.objects.create(**order_data)
                 
                 # Create order line items
@@ -187,16 +207,7 @@ class StripeWH_Handler:
                                 quantity=item_data,
                             )
                             order_line_item.save()
-                        else:
-                            # Handle size variations if needed
-                            for size, quantity in item_data['items_by_size'].items():
-                                order_line_item = OrderItem(
-                                    order=order,
-                                    product=product,
-                                    quantity=quantity,
-                                    product_size=size,
-                                )
-                                order_line_item.save()
+                       
                     except Product.DoesNotExist:
                         logger.error(f"Product with id {item_id} not found")
                         if order:
@@ -205,8 +216,7 @@ class StripeWH_Handler:
                             content=f'Webhook received: {event["type"]} | ERROR: Product not found',
                             status=500)
                 
-                # IMPORTANT: After creating all order items, update the order
-                # This will recalculate delivery_cost, order_total, and grand_total
+                # After creating all order items, update the order
                 order.update_total()
                             
             except Exception as e:

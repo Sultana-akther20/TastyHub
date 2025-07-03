@@ -18,7 +18,6 @@ class Order(models.Model):
     full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=False, blank=False)
-    #country = models.CharField(max_length=40, null=False, blank=False)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=False, blank=False)
     street_address1 = models.CharField(max_length=80, null=False, blank=False)
@@ -43,12 +42,21 @@ class Order(models.Model):
 
     def update_total(self):
         """Update grand total each time an item is added to the order."""
+        # Calculate order total from line items using the correct related_name 'items'
         self.order_total = self.items.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
-        if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
-            self.delivery_cost = settings.STANDARD_DELIVERY
+        
+        # Calculate delivery cost based on delivery area (not free delivery threshold)
+        if self.delivery_area == 'london':
+            # Use your actual London delivery cost here
+            self.delivery_cost = getattr(settings, 'LONDON_DELIVERY_COST', 5.00)
         else:
-            self.delivery_cost = 0
+            # Default delivery cost for other areas
+            self.delivery_cost = 0.00
+        
+        # Calculate grand total
         self.grand_total = self.order_total + self.delivery_cost
+        
+        # Save the order
         self.save()
 
     def __str__(self):
@@ -72,5 +80,3 @@ class OrderItem(models.Model):
     def __str__(self):
         """Return a string representation of the order item."""
         return f'Order {self.order.order_number} Item {self.id}'
-    
-
