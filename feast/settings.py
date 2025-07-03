@@ -99,18 +99,23 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-# Email configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'TastyHub@example.com'
+# Email configuration - conditional based on DEBUG setting
+if DEBUG:
+    # Development: Print emails to console
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = 'noreply@tastyhub.com'
+else:
+    # Production: Send actual emails via SMTP
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    DEFAULT_FROM_EMAIL = 'TastyHub@example.com'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@tastyhub.com'
-ADMIN_EMAIL = 'Sultana.akther2805@gmail.com' 
+# This applies to both environments
+ADMIN_EMAIL = 'Sultana.akther2805@gmail.com'
 
 # Allauth settings
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
