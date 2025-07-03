@@ -4,11 +4,10 @@ from products.models import Product
 from django.http import JsonResponse
 import json
 
+#view cart
 def view_cart(request):
     """Display the shopping cart"""
-    # Debug: Print cart contents
     cart = request.session.get('cart', {})
-    print(f"Cart contents: {cart}")
     return render(request, 'cart/cart.html')
 
 def add_to_cart(request, product_id):
@@ -18,7 +17,6 @@ def add_to_cart(request, product_id):
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
     
-    # Convert product_id to string for session storage
     product_id_str = str(product_id)
     
     if product_id_str in cart:
@@ -29,7 +27,6 @@ def add_to_cart(request, product_id):
         messages.success(request, f'Added {product.name} to your cart')
     
     request.session['cart'] = cart
-    print(f"Cart after adding: {cart}")  # Debug
     return redirect(redirect_url)
 
 def adjust_bag(request, product_id):
@@ -41,10 +38,7 @@ def adjust_bag(request, product_id):
     quantity = int(request.POST.get('quantity', 0))
     cart = request.session.get('cart', {})
     
-    # Convert product_id to string for session storage
     product_id_str = str(product_id)
-    
-    print(f"Adjusting product {product_id_str} to quantity {quantity}")  # Debug
     
     if quantity > 0:
         cart[product_id_str] = quantity
@@ -55,7 +49,6 @@ def adjust_bag(request, product_id):
             messages.success(request, f'Removed {product.name} from your cart')
     
     request.session['cart'] = cart
-    print(f"Cart after adjustment: {cart}")  # Debug
     return redirect(reverse('view_cart'))
 
 def update_cart(request, product_id):
@@ -90,8 +83,6 @@ def remove_from_cart(request, product_id):
         # Convert product_id to string for session storage
         product_id_str = str(product_id)
         
-        print(f"Removing product {product_id_str} from cart")  # Debug
-        
         if product_id_str in cart:
             current_quantity = cart[product_id_str]
             
@@ -113,10 +104,8 @@ def remove_from_cart(request, product_id):
                 messages.success(request, f'Removed {product.name} from your cart')
             
             request.session['cart'] = cart
-            print(f"Cart after removal: {cart}")  # Debug
             return JsonResponse({'success': True})
         
         return JsonResponse({'success': False, 'message': 'Item not found'})
     except Exception as e:
-        print(f"Error removing item: {str(e)}")  # Debug
         return JsonResponse({'success': False, 'message': str(e)})

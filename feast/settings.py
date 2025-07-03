@@ -15,19 +15,6 @@ from decimal import Decimal
 # Load environment variables from .env file
 load_dotenv()
 
-
-# Set timezone 
-TIME_ZONE = 'Europe/London'
-
-# Enable timezone support
-USE_TZ = True
-
-#Set language and internationalization
-LANGUAGE_CODE = 'en-gb'
-USE_I18N = True
-USE_L10N = True
-
-
 # Environment variables
 SECRET_KEY = os.getenv('SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
@@ -170,11 +157,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
+# Set timezone 
+TIME_ZONE = 'Europe/London'
+# Enable timezone support
 USE_TZ = True
+LANGUAGE_CODE = 'en-gb'
+USE_I18N = True
+USE_L10N = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeinstitute-ide.net/",
