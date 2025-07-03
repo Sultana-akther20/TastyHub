@@ -193,7 +193,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Delivery settings
 FREE_DELIVERY_THRESHOLD = Decimal('30.00')
-STANDARD_DELIVERY = Decimal('10.00')
+STANDARD_DELIVERY = Decimal('5.00')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

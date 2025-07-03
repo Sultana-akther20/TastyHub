@@ -19,7 +19,7 @@ def cart_contents(request):
                 'product_id': product_id,
                 'quantity': quantity,
                 'product': product,
-                'subtotal': subtotal,  # Add subtotal for easier template access
+                'subtotal': subtotal,
             })
         except Product.DoesNotExist:
             # Handle case where product no longer exists
@@ -27,10 +27,11 @@ def cart_contents(request):
     
     # Convert settings values to Decimal for consistent calculation
     free_delivery_threshold = Decimal(str(getattr(settings, 'FREE_DELIVERY_THRESHOLD', 50)))
-    standard_delivery_rate = Decimal(str(getattr(settings, 'STANDARD_DELIVERY', 10))) / 100
+    # Fixed: Use STANDARD_DELIVERY as a fixed amount, not a percentage
+    standard_delivery_charge = Decimal(str(getattr(settings, 'STANDARD_DELIVERY', 5)))
     
     if total < free_delivery_threshold:
-        delivery = total * standard_delivery_rate
+        delivery = standard_delivery_charge  # Fixed: Use fixed charge instead of percentage
         free_delivery_delta = free_delivery_threshold - total
     else:
         delivery = 0
