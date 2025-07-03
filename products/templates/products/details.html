@@ -166,7 +166,7 @@
                     <div class="card h-100">
                         {% if related_product.image %}
                         <a href="{% url 'details' related_product.id %}">
-                            <img class="card-img-top" src="{{ related_product.image.url }}" alt="{{ related_product.name }}" style="height: 150px; object-fit: cover;">
+                            <img class="card-img-top" src="{{ related_product.image }}" alt="{{ related_product.name }}" style="height: 150px; object-fit: cover;">
                         </a>
                         {% endif %}
                         <div class="card-body">
