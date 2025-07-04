@@ -104,7 +104,7 @@ class ContactForm(forms.Form):
         max_length=200,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Brief subject of your message',
+            'placeholder': 'Brief subject',
             'required': True
         }),
         label='Subject'
@@ -126,9 +126,9 @@ class ContactForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Order #12345 (if applicable)'
+            'placeholder': 'Order #12'
         }),
-        label='Order Reference (Optional)'
+        label='Order Ref: (Optional)'
     )
     
     def clean_message(self):
@@ -138,7 +138,7 @@ class ContactForm(forms.Form):
         return message
     
     def save(self):
-        """Save contact form data - you'll need to create a Contact model"""
+        """Save contact form data"""
         return self.cleaned_data
 
 # save contact forms to database
@@ -151,10 +151,10 @@ class ContactModel(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your full name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'your.email@example.com'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+1 (555) 123-4567'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+44(0)'}),
             'inquiry_type': forms.Select(attrs={'class': 'form-control'}),
             'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Brief subject'}),
             'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'placeholder': 'Your message...'}),
-            'order_reference': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Order #12345 (optional)'}),
+            'order_reference': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Order #12'}),
         }
 
