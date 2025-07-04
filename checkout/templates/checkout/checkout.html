@@ -146,12 +146,10 @@
         <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
         <div class="payment-section">
             <div class="stripe-card-container">
-                <!-- Fixed: Changed id from "card-payment" to "card-element" to match JavaScript -->
                 <div class="mb-3" id="card-payment"></div>
             </div>
             <!-- Error form -->
             <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-            <!-- Add this hidden input to pass client_secret to the form -->
             <input type="hidden" name="client_secret" value="{{ client_secret }}">
         </div>
     </fieldset>

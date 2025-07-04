@@ -3,9 +3,6 @@ $(document).ready(function() {
     var stripePublicKey = JSON.parse(document.getElementById('id_stripe_public_key').textContent);
     var clientSecret = JSON.parse(document.getElementById('id_client_secret').textContent);
     
-    // Debug: Check if keys are properly loaded
-    console.log('Stripe Public Key:', stripePublicKey);
-    console.log('Client Secret:', clientSecret);
     
     // Check if keys exist before initializing Stripe
     if (!stripePublicKey) {
@@ -47,7 +44,7 @@ $(document).ready(function() {
     // Create card element with responsive options
     var cardOptions = {
         style: style,
-        hidePostalCode: true, // Hide postal code since you have it in the form
+        hidePostalCode: true,
         iconStyle: 'solid',
         classes: {
             focus: 'StripeElement--focus',
@@ -74,10 +71,6 @@ $(document).ready(function() {
     // Handle form submission
     var form = document.getElementById('payment-form');
     var submitButton = document.getElementById('submit-button');
-    
-    // Debug: Check if form and button exist
-    console.log('Form element:', form);
-    console.log('Submit button:', submitButton);
     
     if (!form) {
         console.error('Payment form not found! Check your HTML.');

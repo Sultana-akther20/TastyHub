@@ -1,47 +1,5 @@
 {% extends "base.html" %}
 
-{% block extra_css %}
-
-<style>
-  /* Hide unnecessary navigation/header items */
-  header.container-fluid.fixed-top,
-  #topnav,
-  .navbar,
-  #delivery-banner,
-  .navbar-nav,
-  .list-inline {
-    display: none !important;
-  }
-
-  /* Custom success card styling */
-  .success-card {
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    border: 2px solid #28a745;
-    backdrop-filter: blur(8px);
-    animation: fadeIn 0.5s ease-in;
-  }
-
-  .success-icon i {
-    animation: popIn 0.6s ease-out;
-  }
-
-  /* Responsive typography adjustments */
-  @media (max-width: 768px) {
-    .success-icon i {
-      font-size: 2.5rem !important;
-    }
-
-    h1 {
-      font-size: 1.6rem;
-    }
-
-    .lead {
-      font-size: 1rem;
-    }
-  }
-</style>
-{% endblock %}
-
 {% block content %}
 <div class="container-fluid py-4" style="background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh;">
   <div class="row justify-content-center">

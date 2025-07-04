@@ -34,10 +34,6 @@
     margin: 0;
 }
 
-.mobile-qty-input[type=number] {
-    -moz-appearance: textfield;
-}
-
 /* Ensure proper touch targets on mobile */
 @media (max-width: 768px) {
     .mobile-qty-btn {
@@ -60,19 +56,16 @@
         width: 100px !important;
     }
     
-    /* Ensure the quantity control container doesn't overflow */
     .mobile-qty-controls .input-group {
         width: 100% !important;
         max-width: 100% !important;
     }
     
-    /* Fix the card layout to prevent overflow */
     .card-body .d-flex.align-items-center.gap-2 {
         flex-wrap: wrap !important;
         gap: 0.5rem !important;
     }
     
-    /* Ensure buttons container doesn't overflow */
     .d-flex.gap-2 {
         flex-wrap: wrap !important;
         gap: 0.5rem !important;

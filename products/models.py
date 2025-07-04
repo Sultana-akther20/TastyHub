@@ -51,10 +51,6 @@ class Category(models.Model):
             children.extend(child.get_all_children)
         return children
 
-
-
-
-
 class Product(models.Model):
     """
     Product model for menu items
@@ -88,8 +84,6 @@ class Product(models.Model):
     # SEO and URL
     slug = models.SlugField(max_length=220, unique=True, blank=True, null=True)
     
-    
-    #image_url = models.URLField(max_length=1000, null=True, blank=True)
     image = models.URLField(
     max_length=1000,  # large enough for Cloudinary URLs
     null=True, 

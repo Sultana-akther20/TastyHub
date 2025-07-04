@@ -9,7 +9,6 @@ import json
 import time
 import logging
 import stripe
-from datetime import datetime
 import pytz
 
 logger = logging.getLogger(__name__)
@@ -152,11 +151,8 @@ class StripeWH_Handler:
                 time.sleep(1)
         
         if order_exists:
-            # FIX 1: Update totals for existing orders to ensure correct prices
             order.update_total()
-            
-            # FIX 2: Update order timestamp to current time (in your timezone)
-            # Convert current UTC time to your local timezone
+
             if hasattr(settings, 'TIME_ZONE'):
                 local_tz = pytz.timezone(settings.TIME_ZONE)
                 order.date = timezone.now().astimezone(local_tz)
@@ -190,7 +186,6 @@ class StripeWH_Handler:
                     'stripe_pid': pid,
                 }
                 
-                # FIX 3: Set the correct timestamp when creating the order
                 if hasattr(settings, 'TIME_ZONE'):
                     local_tz = pytz.timezone(settings.TIME_ZONE)
                     order_data['date'] = timezone.now().astimezone(local_tz)
@@ -217,7 +212,7 @@ class StripeWH_Handler:
                             content=f'Webhook received: {event["type"]} | ERROR: Product not found',
                             status=500)
                 
-                # IMPORTANT: After creating all order items, update the order
+                #After creating all order items, update the order
                 # This will recalculate delivery_cost, order_total, and grand_total
                 order.update_total()
                             

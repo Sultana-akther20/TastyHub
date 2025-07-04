@@ -1,5 +1,6 @@
-/* Enhanced Stripe Element Styling - Mobile Fixes */
-/* Base Stripe Element Styling */
+/* Enhanced Stripe Element Styling - Mobile Optimized */
+
+/* ===== BASE STRIPE ELEMENT STYLING ===== */
 .StripeElement,
 .stripe-style-input {
     box-sizing: border-box;
@@ -16,7 +17,7 @@
     align-items: center;
 }
 
-/* Stripe Card Element Specific Styling */
+/* Stripe Card Element Specific */
 #card-payment {
     width: 100% !important;
     height: 50px !important;
@@ -34,21 +35,21 @@
 .stripe-card-container {
     background: white;
     border-radius: 15px;
-    padding: 0 !important; /* Remove padding to let Stripe element handle it */
+    padding: 0 !important;
     margin: 1rem 0;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border: 2px solid rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-/* FIXED: Background Image and Overlay Fixes */
+/* ===== BACKGROUND AND OVERLAY ===== */
 .checkout-background-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('your-background-image.jpg'); /* Replace with your actual image */
+    background-image: url('your-background-image.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -56,7 +57,6 @@
     z-index: -2;
 }
 
-/* Add dark overlay to improve text readability */
 .checkout-background-overlay::after {
     content: '';
     position: absolute;
@@ -64,20 +64,27 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Dark overlay for better text contrast */
+    background: rgba(0, 0, 0, 0.6);
     z-index: 1;
 }
 
-/* Ensure main container is above overlay */
+/* ===== MAIN CONTAINERS ===== */
 .checkout-main-container {
     position: relative;
     z-index: 10;
     min-height: 100vh;
     padding: 2rem 1rem;
     background: transparent;
+    overflow: visible !important;
 }
 
-/* FIXED: Text Color and Contrast Improvements */
+.checkout-content-wrapper {
+    overflow: visible !important;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ===== TYPOGRAPHY AND TEXT COLORS ===== */
 .checkout-page-title,
 .checkout-page-subtitle,
 .card-title-primary,
@@ -88,25 +95,6 @@
     font-weight: bold;
 }
 
-/* Card backgrounds with better opacity */
-.order-summary-card,
-.checkout-form-card {
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    margin-bottom: 2rem;
-}
-
-/* Form sections with better backgrounds */
-fieldset {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border-radius: 15px !important;
-    border: 2px solid rgba(255, 255, 255, 0.3) !important;
-    backdrop-filter: blur(10px);
-}
-
-/* Text inside cards should be dark */
 .card-body-modern,
 .order-items-list,
 .order-totals-section,
@@ -114,321 +102,12 @@ fieldset {
     color: #333333 !important;
 }
 
-/* Form labels and text */
 .form-check-label,
 .text-muted,
 legend {
     color: #555555 !important;
 }
 
-/* Button improvements */
-.btn-modern {
-    backdrop-filter: blur(10px);
-    border: none;
-    font-weight: bold;
-    text-shadow: none;
-}
-
-.btn-complete-modern {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
-    color: white;
-    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
-}
-
-.btn-back-modern {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-}
-
-/* Mobile Specific Fixes */
-@media (max-width: 768px) {
-    /* Background fixes for mobile */
-    .checkout-background-overlay {
-        background-attachment: scroll; /* Fixed attachment doesn't work well on mobile */
-        background-size: cover;
-        background-position: center;
-    }
-    
-    .checkout-main-container {
-        padding: 1rem 0.5rem;
-    }
-    
-    .StripeElement,
-    .stripe-style-input {
-        font-size: 16px !important; /* Prevents iOS zoom */
-        height: 50px !important;
-        padding: 12px 16px !important;
-        border-radius: 12px;
-        min-height: 50px;
-    }
-    
-    #card-payment {
-        width: 100% !important;
-        height: 50px !important;
-        padding: 12px 16px !important;
-        box-sizing: border-box !important;
-        font-size: 16px !important;
-        border: 2px solid rgba(0, 0, 0, 0.1) !important;
-        border-radius: 12px !important;
-        background: white !important;
-        min-height: 50px !important;
-        display: block !important;
-    }
-    
-    .stripe-card-container {
-        padding: 0 !important;
-        margin: 1rem 0;
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        border-radius: 12px;
-        overflow: visible;
-    }
-    
-    /* Ensure proper container width */
-    .payment-section {
-        width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-    
-    /* Fix for payment form container */
-    #payment-form {
-        width: 100%;
-        box-sizing: border-box;
-    }
-    
-    /* Stripe element wrapper */
-    .stripe-element-wrapper {
-        width: 100%;
-        position: relative;
-        margin: 1rem 0;
-    }
-    
-    /* Mobile text improvements */
-    .checkout-page-title {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .checkout-page-subtitle {
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-    }
-}
-
-/* Small Mobile Devices */
-@media (max-width: 480px) {
-    .StripeElement,
-    .stripe-style-input,
-    #card-payment {
-        height: 48px !important;
-        font-size: 16px !important;
-        padding: 10px 14px !important;
-        border-radius: 10px !important;
-        min-height: 48px !important;
-    }
-    
-    .stripe-card-container {
-        margin: 0.75rem 0;
-        border-radius: 10px;
-    }
-    
-    .checkout-main-container {
-        padding: 0.5rem;
-    }
-    
-    .order-summary-card,
-    .checkout-form-card {
-        margin-bottom: 1rem;
-        border-radius: 15px;
-    }
-}
-
-/* Focus States */
-.StripeElement--focus,
-#card-payment:focus {
-    outline: none !important;
-    border-color: #ff6b35 !important;
-    background: white !important;
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1) !important;
-}
-
-/* Invalid States */
-.StripeElement--invalid,
-#card-payment.StripeElement--invalid {
-    border-color: #e74c3c !important;
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
-}
-
-/* Loading State */
-.StripeElement--loading {
-    background: rgba(255, 255, 255, 0.95) !important;
-}
-
-/* Card Errors */
-#card-errors {
-    background: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-    padding: 1rem;
-    border-radius: 10px;
-    border-left: 4px solid #e74c3c;
-    margin-top: 1rem;
-    font-size: 14px;
-    display: block;
-    min-height: auto;
-}
-
-@media (max-width: 768px) {
-    #card-errors {
-        margin-top: 0.75rem;
-        padding: 0.75rem;
-        font-size: 13px;
-        border-radius: 8px;
-    }
-}
-
-/* Additional Container Fixes */
-.checkout-form-card {
-    width: 100%;
-    box-sizing: border-box;
-    overflow: visible;
-}
-
-.card-body-modern {
-    width: 100%;
-    box-sizing: border-box;
-    overflow: visible;
-}
-
-/* Form Section Fixes */
-.checkout-form-section {
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 2rem;
-}
-
-/* Fieldset fixes for mobile */
-@media (max-width: 768px) {
-    fieldset {
-        width: 100% !important;
-        box-sizing: border-box !important;
-        padding: 1.5rem 1rem !important;
-        margin: 0 0 1.5rem 0 !important;
-        border-radius: 12px !important;
-        overflow: visible !important;
-    }
-    
-    /* Ensure form controls don't overflow */
-    .form-control,
-    .modern-form-input {
-        width: 100% !important;
-        box-sizing: border-box !important;
-        font-size: 16px !important; /* Prevents iOS zoom */
-        max-width: 100% !important;
-    }
-}
-
-/* Prevent horizontal scrolling */
-@media (max-width: 768px) {
-    .checkout-main-container,
-    .checkout-content-wrapper,
-    .order-summary-card,
-    .checkout-form-card,
-    .payment-section {
-        overflow-x: hidden;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-}
-
-/* FIXED: Order Item Image Sizing */
-.item-image-container {
-    width: 60px !important;
-    height: 60px !important;
-    flex-shrink: 0;
-    overflow: hidden;
-    border-radius: 10px;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-}
-
-.item-image-modern {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    display: block !important;
-    border-radius: 8px;
-}
-
-/* Order item row layout */
-.order-item-row {
-    display: flex !important;
-    align-items: center !important;
-    gap: 1rem !important;
-    padding: 1rem 0 !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.order-item-row:last-child {
-    border-bottom: none;
-}
-
-.item-details-section {
-    flex: 1 !important;
-    min-width: 0 !important; /* Prevents overflow */
-}
-
-.item-price-modern {
-    font-weight: bold !important;
-    color: #333333 !important; /* Changed from orange to dark gray */
-    white-space: nowrap !important;
-}
-
-/* Mobile adjustments for order items */
-@media (max-width: 768px) {
-    .item-image-container {
-        width: 50px !important;
-        height: 50px !important;
-    }
-    
-    .order-item-row {
-        gap: 0.75rem !important;
-        padding: 0.75rem 0 !important;
-    }
-    
-    .item-name-modern {
-        font-size: 0.9rem !important;
-        line-height: 1.3 !important;
-    }
-    
-    .item-quantity-modern {
-        font-size: 0.8rem !important;
-        color: #666 !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .item-image-container {
-        width: 45px !important;
-        height: 45px !important;
-    }
-    
-    .order-item-row {
-        gap: 0.5rem !important;
-    }
-    
-    .item-name-modern {
-        font-size: 0.85rem !important;
-    }
-    
-    .item-price-modern {
-        font-size: 0.9rem !important;
-    }
-}
-
-/* Additional readability improvements */
 .item-name-modern,
 .item-quantity-modern,
 .total-row-modern {
@@ -436,31 +115,46 @@ legend {
     font-weight: 500;
 }
 
-.charge-warning {
-    background: rgba(255, 193, 7, 0.9);
-    color: #333;
-    padding: 1rem;
-    border-radius: 10px;
-    margin-top: 1rem;
-    border-left: 4px solid #ffc107;
+/* ===== CARDS AND SECTIONS ===== */
+.order-summary-card,
+.checkout-form-card {
+    background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(10px);
-}
-
-/* Header section improvements */
-.checkout-header-section {
-    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     margin-bottom: 2rem;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: visible !important;
 }
 
+.card-body-modern {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: visible !important;
+}
 
+.checkout-form-section {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2rem;
+    overflow: visible !important;
+    position: relative;
+    z-index: 1;
+}
 
-/* Add these CSS rules to fix the delivery area dropdown issue */
+/* ===== FIELDSETS AND FORMS ===== */
+fieldset {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 15px !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(10px);
+    overflow: visible !important;
+    position: relative;
+    z-index: 1;
+}
 
-/* Fix for delivery area select dropdown */
+/* ===== DROPDOWN FIXES ===== */
 .stripe-style-input.form-select,
 select.stripe-style-input,
 #id_delivery_area {
@@ -485,7 +179,6 @@ select.stripe-style-input,
     min-height: 50px !important;
 }
 
-/* Ensure the select dropdown appears above other elements */
 .stripe-style-input.form-select:focus,
 select.stripe-style-input:focus,
 #id_delivery_area:focus {
@@ -493,19 +186,6 @@ select.stripe-style-input:focus,
     position: relative;
 }
 
-
-/* Fix the fieldset overflow that's cutting off the dropdown */
-fieldset {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border-radius: 15px !important;
-    border: 2px solid rgba(255, 255, 255, 0.3) !important;
-    backdrop-filter: blur(10px);
-    overflow: visible !important; /* This is crucial - was likely hidden */
-    position: relative;
-    z-index: 1;
-}
-
-/* Specific fix for delivery area fieldset */
 #div_id_delivery_area fieldset,
 .delivery-area-section fieldset {
     overflow: visible !important;
@@ -513,36 +193,204 @@ fieldset {
     z-index: 10;
 }
 
-/* Container fixes to prevent clipping */
-.checkout-form-section,
-.form-section,
-.delivery-details-section {
-    overflow: visible !important;
+#div_id_delivery_area input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
+    white-space: normal;
+}
+
+/* ===== BUTTONS ===== */
+.btn-modern {
+    backdrop-filter: blur(10px);
+    border: none;
+    font-weight: bold;
+    text-shadow: none;
+}
+
+.btn-complete-modern {
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+.btn-back-modern {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ===== ORDER ITEMS ===== */
+.item-image-container {
+    width: 60px !important;
+    height: 60px !important;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.item-image-modern {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    border-radius: 8px;
+}
+
+.order-item-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    padding: 1rem 0 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.order-item-row:last-child {
+    border-bottom: none;
+}
+
+.item-details-section {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.item-price-modern {
+    font-weight: bold !important;
+    color: #333333 !important;
+    white-space: nowrap !important;
+}
+
+/* ===== STATES ===== */
+.StripeElement--focus,
+#card-payment:focus {
+    outline: none !important;
+    border-color: #ff6b35 !important;
+    background: white !important;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1) !important;
+}
+
+.StripeElement--invalid,
+#card-payment.StripeElement--invalid {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
+}
+
+.StripeElement--loading {
+    background: rgba(255, 255, 255, 0.95) !important;
+}
+
+.form-control:focus,
+.stripe-style-input:focus,
+select:focus {
+    position: relative;
+    z-index: 999;
+}
+
+/* ===== MESSAGES AND WARNINGS ===== */
+#card-errors {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    padding: 1rem;
+    border-radius: 10px;
+    border-left: 4px solid #e74c3c;
+    margin-top: 1rem;
+    font-size: 14px;
+    display: block;
+    min-height: auto;
+}
+
+.charge-warning {
+    background: rgba(255, 193, 7, 0.9);
+    color: #333;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    border-left: 4px solid #ffc107;
+    backdrop-filter: blur(10px);
+}
+
+/* ===== HEADER SECTION ===== */
+.checkout-header-section {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.payment-section {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#payment-form {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.stripe-element-wrapper {
+    width: 100%;
+    position: relative;
+    margin: 1rem 0;
+}
+
+.form-label,
+.fieldset-label,
+legend {
     position: relative;
     z-index: 1;
 }
-#div_id_delivery_area input {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: visible;
-  white-space: normal;
-}
 
-
-/* Ensure parent containers don't clip the dropdown */
-.checkout-form-card,
-.card-body-modern {
-    overflow: visible !important;
-    position: relative;
-}
-
-/* Mobile specific fixes for dropdown */
+/* ===== TABLET RESPONSIVE (768px and below) ===== */
 @media (max-width: 768px) {
+    .checkout-background-overlay {
+        background-attachment: scroll;
+    }
+    
+    .checkout-main-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .StripeElement,
+    .stripe-style-input,
+    #card-payment {
+        font-size: 16px !important;
+        height: 50px !important;
+        padding: 12px 16px !important;
+        border-radius: 12px;
+        min-height: 50px !important;
+    }
+    
+    .stripe-card-container {
+        padding: 0 !important;
+        margin: 1rem 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 12px;
+        overflow: visible;
+    }
+    
+    .checkout-page-title {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .checkout-page-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
     .stripe-style-input.form-select,
     select.stripe-style-input,
     #id_delivery_area {
-        font-size: 16px !important; /* Prevents iOS zoom */
+        font-size: 16px !important;
         height: 50px !important;
         min-height: 50px !important;
         line-height: 1.2 !important;
@@ -553,25 +401,94 @@ fieldset {
         box-sizing: border-box !important;
     }
     
-    /* Ensure mobile fieldsets don't clip */
     fieldset {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 1.5rem 1rem !important;
+        margin: 0 0 2rem 0 !important;
+        border-radius: 12px !important;
         overflow: visible !important;
         position: relative;
         z-index: 10;
-        margin-bottom: 2rem !important; /* Add space for dropdown */
     }
     
-    /* Add breathing room around select elements */
+    .form-control,
+    .modern-form-input {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        font-size: 16px !important;
+        max-width: 100% !important;
+    }
+    
     .form-group:has(select),
     .mb-3:has(select) {
         margin-bottom: 2rem !important;
         position: relative;
         z-index: 10;
     }
+    
+    .item-image-container {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .order-item-row {
+        gap: 0.75rem !important;
+        padding: 0.75rem 0 !important;
+    }
+    
+    .item-name-modern {
+        font-size: 0.9rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    .item-quantity-modern {
+        font-size: 0.8rem !important;
+        color: #666 !important;
+    }
+    
+    #card-errors {
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+    
+    .order-summary-card,
+    .checkout-form-card {
+        margin-bottom: 1rem;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
 }
 
-/* Fix for small mobile devices */
+/* ===== SMALL MOBILE (480px and below) ===== */
 @media (max-width: 480px) {
+    .checkout-main-container {
+        padding: 0.5rem;
+    }
+    
+    .StripeElement,
+    .stripe-style-input,
+    #card-payment {
+        height: 48px !important;
+        font-size: 16px !important;
+        padding: 10px 14px !important;
+        border-radius: 10px !important;
+        min-height: 48px !important;
+    }
+    
+    .stripe-card-container {
+        margin: 0.75rem 0;
+        border-radius: 10px;
+    }
+    
+    .order-summary-card,
+    .checkout-form-card {
+        margin-bottom: 1rem;
+        border-radius: 15px;
+    }
+    
     .stripe-style-input.form-select,
     select.stripe-style-input,
     #id_delivery_area {
@@ -584,31 +501,26 @@ fieldset {
         align-items: center !important;
         line-height: 1.1 !important;
     }
+    
+    .item-image-container {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    .order-item-row {
+        gap: 0.5rem !important;
+    }
+    
+    .item-name-modern {
+        font-size: 0.85rem !important;
+    }
+    
+    .item-price-modern {
+        font-size: 0.9rem !important;
+    }
 }
 
-/* Prevent any parent from clipping dropdowns */
-.checkout-main-container,
-.checkout-content-wrapper {
-    overflow: visible !important;
-}
-
-/* Remove any transform or clip properties that might affect dropdowns */
+/* ===== PREVENT TRANSFORM ISSUES ===== */
 .checkout-form-section * {
-    transform: none !important; /* Remove any transforms that might clip */
-}
-
-/* Additional z-index management for form elements */
-.form-control:focus,
-.stripe-style-input:focus,
-select:focus {
-    position: relative;
-    z-index: 999;
-}
-
-/* Ensure labels don't interfere with dropdown positioning */
-.form-label,
-.fieldset-label,
-legend {
-    position: relative;
-    z-index: 1;
+    transform: none !important;
 }

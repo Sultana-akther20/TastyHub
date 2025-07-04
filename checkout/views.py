@@ -1,4 +1,3 @@
-# views.py - Fixed version with better error handling
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib import messages
@@ -63,7 +62,7 @@ def checkout(request):
             messages.error(request, 'Payment information is missing. Please try again.')
             return redirect(reverse('checkout'))
         
-        # Fixed: Include delivery_area in form data
+        #Include delivery_area in form data
         form_data = {
             'full_name': request.POST.get('full_name', '').strip(),
             'email': request.POST.get('email', '').strip(),
@@ -73,7 +72,7 @@ def checkout(request):
             'street_address1': request.POST.get('street_address1', '').strip(),
             'street_address2': request.POST.get('street_address2', '').strip(),
             'county': request.POST.get('county', '').strip(),
-            'delivery_area': request.POST.get('delivery_area', 'london'),  # Fixed: Add delivery_area
+            'delivery_area': request.POST.get('delivery_area', 'london'),
         }
         
         logger.info(f"Form data: {form_data}")
@@ -87,7 +86,7 @@ def checkout(request):
                     order = order_form.save(commit=False)
                     pid = client_secret.split('_secret')[0]
                     order.stripe_pid = pid
-                    order.original_cart = json.dumps(cart)  # Fixed: Use original_cart (not original_bag)
+                    order.original_cart = json.dumps(cart) 
                     order.save()
                     logger.info(f"Order created with ID: {order.id}, Order number: {order.order_number}")
                     
@@ -103,16 +102,7 @@ def checkout(request):
                                 )
                                 order_line_item.save()
                                 logger.info(f"Created order item: {product.name} x {item_data}")
-                            else:
-                                # Handle products with size variations
-                                for size, quantity in item_data.get('items_by_size', {}).items():
-                                    order_line_item = OrderItem(
-                                        order=order,
-                                        product=product,
-                                        quantity=quantity,
-                                    )
-                                    order_line_item.save()
-                                    logger.info(f"Created sized order item: {product.name} ({size}) x {quantity}")
+                            
                         except Product.DoesNotExist:
                             logger.error(f"Product with ID {item_id} not found")
                             messages.error(request, (
@@ -146,7 +136,7 @@ def checkout(request):
             return render(request, 'checkout/checkout.html', context)
             
     else:
-        # GET request - show checkout form
+        # GET request
         cart = request.session.get('cart', {})
         if not cart:
             messages.error(request, 'Your cart is empty. Please add items before checking out.')

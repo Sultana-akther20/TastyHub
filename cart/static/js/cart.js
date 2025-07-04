@@ -94,7 +94,6 @@ $(document).ready(function () {
         var updateBtn = $(this);
         updateBtn.prop('disabled', true).text('Updating...');
         
-        // Try mobile form first (since we're likely on mobile if there are issues)
         var form = $('#update-form-mobile-' + itemId);
         if (form.length === 0) {
             form = $('#update-form-' + itemId);
@@ -176,7 +175,7 @@ $(document).ready(function () {
         return false;
     });
     
-    // Handle window resize to ensure proper input synchronization
+    // Handle window resize
     $(window).on('resize', function() {
         $('.qty_input').each(function() {
             var itemId = $(this).data('item-id');

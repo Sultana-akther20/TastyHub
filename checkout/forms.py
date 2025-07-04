@@ -9,7 +9,7 @@ class OrderForm(forms.ModelForm):
         fields = [
             'full_name', 'email', 'street_address1', 
             'street_address2', 'postcode', 'town_or_city', 
-            'phone_number', 'county', 'delivery_area'  # Include delivery_area
+            'phone_number', 'county', 'delivery_area'
         ]
         
     def __init__(self, *args, **kwargs):
@@ -33,7 +33,6 @@ class OrderForm(forms.ModelForm):
             'delivery_area': 'Delivery Area',
         }
         
-        # Set autofocus on first field
         self.fields['full_name'].widget.attrs['autofocus'] = True
         
         # Apply styling and placeholders to all fields
