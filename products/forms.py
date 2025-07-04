@@ -86,7 +86,7 @@ class ContactForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '+1 (555) 123-4567'
+            'placeholder': '+44(0)'
         }),
         label='Phone Number (Optional)'
     )
